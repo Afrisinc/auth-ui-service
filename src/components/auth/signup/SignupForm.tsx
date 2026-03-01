@@ -1,0 +1,141 @@
+import { useState, useCallback } from "react";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
+import { useSignup } from "@/hooks/useAuth";
+import SignupStepper from "./SignupStepper";
+import StepIdentity from "./StepIdentity";
+import StepAccountType from "./StepAccountType";
+import StepAccountDetails from "./StepAccountDetails";
+import type { IdentityValues, AccountDetailsValues, AccountType, SignupPayload } from "./schemas";
+
+const TOTAL_STEPS = 3;
+
+const SignupForm = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const productCode = searchParams.get("product") || undefined;
+  const redirectUri = searchParams.get("redirect_uri") || undefined;
+
+  const [step, setStep] = useState(0);
+  const [identityData, setIdentityData] = useState<Partial<IdentityValues>>({});
+  const [accountType, setAccountType] = useState<AccountType | null>(null);
+
+  const { mutate, isPending } = useSignup();
+
+  const handleSignupSuccess = useCallback((res: any) => {
+    if (res.success && res.resp_code === 1000) {
+      toast.success("Account created! You can now sign in.");
+      const destination = redirectUri
+        ? `/login?redirect_uri=${encodeURIComponent(redirectUri)}${productCode ? `&product=${productCode}` : ""}`
+        : "/login";
+      navigate(destination);
+    } else {
+      toast.error(res.resp_msg || "Registration failed. Please try again.");
+    }
+  }, [redirectUri, productCode, navigate]);
+
+  const handleSignupError = useCallback((error: Error) => {
+    toast.error(error.message || "Registration failed. Please try again.");
+  }, []);
+
+  const handleIdentityNext = useCallback((values: IdentityValues) => {
+    setIdentityData(values);
+    setStep(1);
+  }, []);
+
+  const handleAccountTypeNext = useCallback(() => {
+    setStep(2);
+  }, []);
+
+  const handleFinalSubmit = useCallback((values: AccountDetailsValues) => {
+    if (!accountType) return;
+
+    const payload: SignupPayload = {
+      firstName: identityData.firstName!,
+      lastName: identityData.lastName!,
+      email: identityData.email!,
+      password: identityData.password!,
+      phone: identityData.phone,
+      location: identityData.location || undefined,
+      account_type: accountType,
+      account_name: accountType === "company"
+        ? values.organizationName || ""
+        : values.displayName || `${identityData.firstName || ""} ${identityData.lastName || ""}`.trim(),
+      product_code: productCode,
+      displayName: values.displayName,
+      organizationName: values.organizationName,
+      jobTitle: values.jobTitle,
+      industry: values.industry,
+      companySize: values.companySize,
+      website: values.website || undefined,
+    };
+
+    mutate(payload, {
+      onSuccess: handleSignupSuccess,
+      onError: handleSignupError,
+    });
+  }, [accountType, identityData, productCode, mutate, handleSignupSuccess, handleSignupError]);
+
+  return (
+    <div className="w-full max-w-md mx-auto space-y-6">
+      {/* Logo */}
+      <div className="text-center mb-8">
+        <Link to="/" className="inline-flex items-center gap-2 mb-6">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-lg">A</span>
+          </div>
+          <span className="text-xl font-bold text-foreground">Afrisinc</span>
+        </Link>
+        <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
+        <p className="text-muted-foreground">Join Afrisinc today</p>
+      </div>
+
+      {/* Product badge */}
+      {productCode && (
+        <div className="flex justify-center">
+          <Badge variant="secondary">
+            You're signing up for {productCode.charAt(0).toUpperCase() + productCode.slice(1).toLowerCase()}
+          </Badge>
+        </div>
+      )}
+
+      {/* Stepper */}
+      <SignupStepper currentStep={step} totalSteps={TOTAL_STEPS} />
+
+      {/* Form card */}
+      <div className="bg-card rounded-2xl p-8 shadow-card">
+        {step === 0 && (
+          <StepIdentity defaultValues={identityData} onNext={handleIdentityNext} />
+        )}
+        {step === 1 && (
+          <StepAccountType
+            selected={accountType}
+            onSelect={setAccountType}
+            onNext={handleAccountTypeNext}
+            onBack={() => setStep(0)}
+          />
+        )}
+        {step === 2 && accountType && (
+          <StepAccountDetails
+            accountType={accountType}
+            defaultValues={{}}
+            onSubmit={handleFinalSubmit}
+            onBack={() => setStep(1)}
+            isSubmitting={isPending}
+          />
+        )}
+      </div>
+
+      {/* Footer */}
+      <p className="text-center text-sm text-muted-foreground">
+        Already have an account?{" "}
+        <Link to="/login" className="text-primary hover:underline">
+          Sign in
+        </Link>
+      </p>
+    </div>
+  );
+};
+
+export default SignupForm;

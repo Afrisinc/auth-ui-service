@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Loader2, Mail } from "lucide-react";
-import { getRuntimeConfig } from "@/lib/config";
+import { useVerifyEmail } from "@/hooks/useAuth";
 
 type VerifyState = "loading" | "success" | "error" | "idle";
 
@@ -11,6 +11,7 @@ const VerifyEmail = () => {
   const [state, setState] = useState<VerifyState>("idle");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { mutate } = useVerifyEmail();
 
   const token = searchParams.get("token");
 
@@ -21,28 +22,22 @@ const VerifyEmail = () => {
     }
 
     setState("loading");
-    const config = getRuntimeConfig();
-
-    fetch(`${config.serverUrl}/auth/verify-email`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
-    })
-      .then(async (res) => {
-        if (res.ok) {
+    mutate(token, {
+      onSuccess: (res: any) => {
+        if (res.success && res.resp_code === 1000) {
           setState("success");
           setMessage("Your email has been verified successfully.");
         } else {
-          const errorData = await res.json();
           setState("error");
-          setMessage(errorData.resp_msg || "Verification failed. The link may have expired.");
+          setMessage(res.resp_msg || "Verification failed. The link may have expired.");
         }
-      })
-      .catch(() => {
+      },
+      onError: () => {
         setState("error");
         setMessage("Something went wrong. Please try again.");
-      });
-  }, [token]);
+      },
+    });
+  }, [token, mutate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-hero p-6">

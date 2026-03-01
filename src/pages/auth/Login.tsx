@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/auth";
-import { loginService } from "@/services/auth";
 import { jwtDecode } from "jwt-decode";
+import { useLogin } from "@/hooks/useAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,79 +26,91 @@ const Login = () => {
   const productParam = searchParams.get("product");
   const from = redirectUri || location.state?.from?.pathname || "/dashboard";
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: loginService,
-    onSuccess: (res) => {
-      if (res.success && res.resp_code === 1000) {
-        const token: string = res.data.token || "";
-
-        // Extract roles from response or JWT
-        let roles: string[] = [];
-        if (Array.isArray(res.data.roles)) {
-          roles = res.data.roles;
-        } else if (res.data.role) {
-          roles = [res.data.role];
-        } else {
-          try {
-            const decoded = jwtDecode<{ roles?: string[]; role?: string }>(token);
-            roles = Array.isArray(decoded.roles)
-              ? decoded.roles
-              : decoded.role
-              ? [decoded.role]
-              : [];
-          } catch {
-            roles = [];
-          }
-        }
-
-        localStorage.setItem("token", token);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            id: res.data.user_id,
-            email: res.data.email,
-            accountIds: res.data.account_ids || [],
-            roles,
-          })
-        );
-
-        toast({ title: "Welcome back!", description: "You've successfully signed in." });
-
-        // Build destination; append product param if present
-        let destination = productParam ? `${from}?product=${productParam}` : from;
-
-        // For cross-domain SSO (e.g. notify.afrisinc.com), pass the token
-        // in the URL so the receiving app can bootstrap its session.
-        try {
-          const destUrl = new URL(destination, window.location.href);
-          if (destUrl.origin !== window.location.origin) {
-            destUrl.searchParams.set("_at", token);
-            destination = destUrl.toString();
-          }
-        } catch {
-          // destination is a relative path — same-origin, no token needed in URL
-        }
-
-        window.location.href = destination;
-      } else {
-        toast({
-          title: "Login Failed",
-          description: res.resp_msg || "Invalid credentials",
-          variant: "destructive",
-        });
-      }
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Login Failed",
-        description: error.message || "Login failed",
-        variant: "destructive",
-      });
-    },
-  });
+  const { mutate, isPending } = useLogin();
 
   const onSubmit = (data: LoginSchemaType) => {
-    mutate(data);
+    const payload = {
+      ...data,
+      ...(productParam && { product_code: productParam })    
+    };
+    mutate(payload as LoginSchemaType, {
+      onSuccess: (res: any) => {
+        if (res.success && res.resp_code === 1000) {
+          const token: string = res.data.token || "";
+
+          // Extract roles from response or JWT
+          let roles: string[] = [];
+          if (Array.isArray(res.data.roles)) {
+            roles = res.data.roles;
+          } else if (res.data.role) {
+            roles = [res.data.role];
+          } else {
+            try {
+              const decoded = jwtDecode<{ roles?: string[]; role?: string }>(token);
+              roles = Array.isArray(decoded.roles)
+                ? decoded.roles
+                : decoded.role
+                ? [decoded.role]
+                : [];
+            } catch {
+              roles = [];
+            }
+          }
+
+          localStorage.setItem("token", token);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              id: res.data.user_id,
+              email: res.data.email,
+              accountIds: res.data.account_ids || [],
+              roles,
+            })
+          );
+
+          toast({ title: "Welcome back!", description: "You've successfully signed in." });
+
+          // Priority: backend redirectUrl (with code) → token passthrough → default destination
+          let destination: string;
+
+          // If backend returned a redirect URL (for OAuth/code flow), use it
+          if (res.data.redirect && res.data.callback) {
+            destination = res.data.callback;
+          } else {
+            // Build destination; append product param if present
+            destination = productParam ? `${from}?product=${productParam}` : from;
+
+            // For cross-domain SSO (e.g. notify.afrisinc.com), pass the token
+            // in the URL so the receiving app can bootstrap its session.
+            try {
+              const destUrl = new URL(destination, window.location.href);
+              if (destUrl.origin !== window.location.origin) {
+                destUrl.searchParams.set("_at", token);
+                destination = destUrl.toString();
+              }
+            } catch {
+              // destination is a relative path — same-origin, no token needed in URL
+            }
+          }
+          // console.log("Redirecting to:",res.data, destination);
+
+          window.location.href = destination;
+        } else {
+          toast({
+            title: "Login Failed",
+            description: res.resp_msg || "Invalid credentials",
+            variant: "destructive",
+          });
+        }
+      },
+      onError: (error: Error) => {
+        toast({
+          title: "Login Failed",
+          description: error.message || "Login failed",
+          variant: "destructive",
+        });
+      },
+    });
   };
 
   return (
