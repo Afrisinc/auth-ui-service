@@ -5,6 +5,10 @@ on:
     branches:
       - develop  # deploy on pushes to develop
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
