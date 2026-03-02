@@ -81,12 +81,14 @@ const SignupForm = () => {
     <div className="w-full max-w-md mx-auto space-y-6">
       {/* Logo */}
       <div className="text-center mb-8">
-        <Link to="/" className="inline-flex items-center gap-2 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">A</span>
-          </div>
-          <span className="text-xl font-bold text-foreground">Afrisinc</span>
-        </Link>
+          <Link to="/" className="inline-flex items-center gap-2 mb-6 justify-center">
+            <img
+              src="/afrisic-logo.png"
+              alt="Afrisinc Logo"
+              className="w-10 h-10 rounded-xl object-cover"
+            />
+            <span className="text-xl font-bold text-foreground">Afrisinc</span>
+          </Link>
         <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
         <p className="text-muted-foreground">Join Afrisinc today</p>
       </div>

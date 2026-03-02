@@ -30,7 +30,7 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
 
     if (config.serverUrl) {
       const source = import.meta.env.VITE_API_URL ? 'build-time VITE_API_URL' : 'config.json';
-      console.log(`[Config] Using ${source}:`, config.serverUrl);
+      // console.log(`[Config] Using ${source}:`, config.serverUrl);
     } else {
       console.warn('[Config] serverUrl not configured. Set VITE_API_URL env var at build time.');
     }
@@ -44,7 +44,7 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
     };
     configLoaded = true;
     if (config.serverUrl) {
-      console.log('[Config] Using VITE_API_URL:', config.serverUrl);
+      // console.log('[Config] Using VITE_API_URL:', config.serverUrl);
     } else {
       console.warn('[Config] Warning: VITE_API_URL not configured. API calls will fail.');
     }
