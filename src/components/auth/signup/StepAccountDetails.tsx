@@ -97,6 +97,21 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="companyEmail" className="text-sm font-semibold">
+              Company Email
+            </Label>
+            <Input
+              id="companyEmail"
+              type="email"
+              placeholder="company@example.com"
+              {...register("companyEmail")}
+            />
+            {errors.companyEmail && (
+              <p className="text-sm text-destructive">{errors.companyEmail.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="industry" className="text-sm font-semibold">
               Industry <span className="text-muted-foreground font-normal">(optional)</span>
             </Label>
