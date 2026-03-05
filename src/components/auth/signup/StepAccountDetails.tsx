@@ -55,8 +55,8 @@ const StepAccountDetails = ({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {accountType === "personal" ? (
         <div className="space-y-2">
-          <Label htmlFor="displayName" className="text-sm font-semibold">
-            Display Name <span className="text-muted-foreground font-normal">(optional)</span>
+          <Label htmlFor="displayName" className="heading-4 text-foreground">
+            Display Name <span className="text-muted-foreground font-normal text-sm">(optional)</span>
           </Label>
           <Input
             id="displayName"
@@ -67,7 +67,7 @@ const StepAccountDetails = ({
       ) : (
         <>
           <div className="space-y-2">
-            <Label htmlFor="organizationName" className="text-sm font-semibold">
+            <Label htmlFor="organizationName" className="heading-4 text-foreground">
               Organization Name
             </Label>
             <Input
@@ -86,8 +86,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="jobTitle" className="text-sm font-semibold">
-              Your Job Title <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label htmlFor="jobTitle" className="heading-4 text-foreground">
+              Your Job Title <span className="text-muted-foreground font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="jobTitle"
@@ -97,8 +97,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="companyEmail" className="text-sm font-semibold">
-              Company Email
+            <Label htmlFor="companyEmail" className="heading-4 text-foreground">
+              Company Email <span className="text-muted-foreground font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="companyEmail"
@@ -112,8 +112,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="industry" className="text-sm font-semibold">
-              Industry <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label htmlFor="industry" className="heading-4 text-foreground">
+              Industry <span className="text-muted-foreground font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="industry"
@@ -123,8 +123,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-semibold">
-              Company Size <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label className="heading-4 text-foreground">
+              Company Size <span className="text-muted-foreground font-normal text-sm">(optional)</span>
             </Label>
             <Select onValueChange={(val) => setValue("companySize", val)}>
               <SelectTrigger>
@@ -141,8 +141,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="website" className="text-sm font-semibold">
-              Website <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label htmlFor="website" className="heading-4 text-foreground">
+              Website <span className="text-muted-foreground font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="website"
@@ -181,7 +181,7 @@ const StepAccountDetails = ({
         <Button type="button" variant="outline" className="flex-1" onClick={onBack} disabled={isSubmitting}>
           ← Back
         </Button>
-        <Button variant="gold" type="submit" className="flex-1" disabled={isSubmitting || !termsAccepted}>
+        <Button variant="default" type="submit" className="flex-1" disabled={isSubmitting || !termsAccepted}>
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

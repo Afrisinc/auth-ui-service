@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -57,6 +58,35 @@
     --shadow-lg: 0 10px 15px -3px hsl(220 20% 10% / 0.05), 0 4px 6px -4px hsl(220 20% 10% / 0.03);
     --shadow-xl: 0 20px 25px -5px hsl(220 20% 10% / 0.08), 0 8px 10px -6px hsl(220 20% 10% / 0.03);
     --shadow-gold: 0 10px 40px -10px hsl(36 60% 50% / 0.3);
+
+
+
+      /* Brand Colors */
+  --primary-500: #0293E4;
+  --primary-400: #36A9EA;
+  --primary-300: #66BEEE;
+  --primary-200: #9BD3F6;
+  --primary-100: #CCE9FB;
+
+  /* Fonts */
+  --font-body: "Manrope", sans-serif;
+  --font-heading: "Playfair Display", serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;   /* 12px */
+  --text-sm: 0.875rem;  /* 14px */
+  --text-base: 1rem;    /* 16px */
+  --text-md: 1.125rem;  /* 18px */
+  --text-lg: 1.25rem;   /* 20px */
+  --text-xl: 1.563rem;  /* 25px */
+  --text-2xl: 1.953rem; /* 31px */
+  --text-3xl: 2.441rem; /* 39px */
+  --text-4xl: 3.052rem; /* 49px */
+
+  /* Line Heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
   }
 
   .dark {
@@ -111,6 +141,131 @@
     --shadow-gold: 0 10px 40px -10px hsl(36 65% 55% / 0.4);
   }
 }
+
+
+/* Reusable Typography Components */
+@layer components {
+  /* Headings */
+  .heading-1 {
+    @apply text-4xl font-bold leading-tight;
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    color: hsl(var(--foreground));
+    font-weight: 700;
+    line-height: var(--leading-tight);
+  }
+
+  .heading-2 {
+    @apply text-3xl font-semibold;
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    color: hsl(var(--foreground));
+    line-height: var(--leading-tight);
+  }
+
+  .heading-3 {
+    @apply text-xl font-semibold mb-2;
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    color: hsl(var(--foreground));
+    line-height: var(--leading-normal);
+  }
+  .heading-4 {
+    @apply text-base font-semibold mb-1;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    line-height: var(--leading-normal);
+  }
+
+  /* Body Text */
+  .body-lg {
+    @apply text-lg;
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: hsl(var(--foreground));
+    line-height: var(--leading-relaxed);
+  }
+
+  .body-md {
+    @apply text-base;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: hsl(var(--foreground));
+    line-height: var(--leading-normal);
+  }
+
+  .body-sm {
+    @apply text-sm;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: hsl(var(--foreground));
+    line-height: var(--leading-normal);
+  }
+
+  /* Reusable Buttons */
+  .btn-base {
+    @apply font-medium rounded-lg border border-transparent cursor-pointer transition-all duration-300 inline-flex items-center gap-2;
+    font-family: var(--font-body);
+    font-weight: 500;
+    border-radius: 8px;
+  }
+
+  /* Primary Button - Filled */
+  .btn-primary-solid {
+    @apply bg-primary-500 text-white;
+    background-color: var(--primary-500);
+    color: var(--white);
+  }
+
+  .btn-primary-solid:hover {
+    @apply bg-primary-400;
+    background-color: var(--primary-400);
+  }
+
+  .btn-primary-solid:active {
+    @apply bg-primary-500;
+    background-color: var(--primary-500);
+  }
+
+  /* Secondary Button - Outlined */
+  .btn-secondary-outline {
+    @apply border-border text-foreground bg-transparent;
+    border-color: var(--border);
+    color: var(--foreground);
+  }
+
+  .btn-secondary-outline:hover {
+    @apply bg-secondary;
+    background-color: hsl(var(--secondary));
+  }
+
+  .btn-secondary-outline:active {
+    @apply bg-secondary;
+    background-color: hsl(var(--secondary));
+  }
+
+  /* Button Sizes */
+  .btn-lg {
+    @apply px-7 py-4 text-base;
+    padding: 1rem 1.75rem;
+    font-size: var(--text-base);
+  }
+
+  .btn-md {
+    @apply px-6 py-3 text-sm;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+    padding: 0.5rem 1rem;
+    font-size: var(--text-xs);
+  }
+}
+
 
 @layer base {
   * {
@@ -168,6 +323,19 @@
 
   .glass-dark {
     @apply backdrop-blur-xl bg-card/90 border border-border/30;
+  }
+}
+
+@layer components {
+  /* Brand Color Utilities */
+  .bg-brand-primary {
+    @apply bg-primary-500;
+  }
+  .text-brand-primary {
+    @apply text-primary-500;
+  }
+  .border-brand-primary {
+    @apply border-primary-500;
   }
 }
 
