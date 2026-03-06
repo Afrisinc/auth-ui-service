@@ -89,8 +89,8 @@ const SignupForm = () => {
           />
           <span className="text-xl font-bold text-foreground">Afrisinc</span>
         </Link>
-        <h1 className="heading-3 text-foreground">Create your account</h1>
-        <p className="body-sm text-muted-foreground mt-2">Join Afrisinc today</p>
+        <h1 className="heading-subsection">Create your account</h1>
+        <p className="text-secondary text-sm mt-2">Join Afrisinc today</p>
       </div>
 
       {/* Product badge */}
@@ -130,7 +130,7 @@ const SignupForm = () => {
       </div>
 
       {/* Footer */}
-      <p className="body-sm text-center text-muted-foreground">
+      <p className="text-secondary text-sm text-center">
         Already have an account?{" "}
         <Link to="/login" className="text-primary hover:underline font-semibold">
           Sign in

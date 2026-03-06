@@ -91,8 +91,8 @@ const ResetPassword = () => {
             </div>
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="text-2xl font-bold text-foreground">Set new password</h1>
-          <p className="text-muted-foreground">
+          <h1 className="heading-subsection">Set new password</h1>
+          <p className="text-secondary">
             Choose a strong password for your account
           </p>
         </div>
@@ -103,11 +103,11 @@ const ResetPassword = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="text-lg font-semibold">Password updated</h2>
-              <p className="text-muted-foreground text-sm">
+              <h2 className="heading-label">Password updated</h2>
+              <p className="text-secondary text-sm">
                 Your password has been reset successfully.
               </p>
-              <Button variant="gold" className="w-full mt-4" onClick={() => navigate("/login")}>
+              <Button variant="default" className="w-full mt-4" onClick={() => navigate("/login")}>
                 Sign In
               </Button>
             </div>
@@ -157,7 +157,7 @@ const ResetPassword = () => {
                 )}
               </div>
 
-              <Button variant="gold" className="w-full" type="submit" disabled={loading}>
+              <Button variant="default" className="w-full" type="submit" disabled={loading}>
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -169,7 +169,7 @@ const ResetPassword = () => {
               </Button>
 
               <Link to="/login">
-                <Button variant="ghost" className="w-full">
+                <Button variant="default" className="w-full bg-primary/70 hover:bg-primary/80 mt-2">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Sign In
                 </Button>

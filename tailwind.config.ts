@@ -22,11 +22,10 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          100: "var(--primary-100)",
-          200: "var(--primary-200)",
-          300: "var(--primary-300)",
-          400: "var(--primary-400)",
-          500: "var(--primary-500)",
+          400: "hsl(var(--primary-400))",
+          300: "hsl(var(--primary-300))",
+          200: "hsl(var(--primary-200))",
+          100: "hsl(var(--primary-100))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -52,11 +51,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
-        },
         forest: {
           DEFAULT: "hsl(var(--forest))",
           light: "hsl(var(--forest-light))",
@@ -66,7 +60,7 @@ export default {
         cream: "hsl(var(--cream))",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'serif'],
       },
       borderRadius: {
