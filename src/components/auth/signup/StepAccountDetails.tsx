@@ -98,11 +98,12 @@ const StepAccountDetails = ({
 
           <div className="space-y-2">
             <Label htmlFor="companyEmail" className="heading-label">
-              Company Email <span className="text-secondary font-normal text-sm">(optional)</span>
+              Company Email
             </Label>
             <Input
               id="companyEmail"
               type="email"
+              required
               placeholder="company@example.com"
               {...register("companyEmail")}
             />

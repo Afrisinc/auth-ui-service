@@ -35,8 +35,14 @@ const SignupForm = () => {
     }
   }, [redirectUri, productCode, navigate]);
 
-  const handleSignupError = useCallback((error: Error) => {
-    toast.error(error.message || "Registration failed. Please try again.");
+  const handleSignupError = useCallback((error: any) => {
+    // Extract error message from Axios error response or generic error
+    const errorMessage =
+      error?.response?.data?.resp_msg ||
+      error?.response?.data?.message ||
+      error?.message ||
+      "Registration failed. Please try again.";
+    toast.error(errorMessage);
   }, []);
 
   const handleIdentityNext = useCallback((values: IdentityValues) => {
@@ -66,6 +72,7 @@ const SignupForm = () => {
       displayName: values.displayName,
       organizationName: values.organizationName,
       jobTitle: values.jobTitle,
+      companyEmail: values.companyEmail || undefined,
       industry: values.industry,
       companySize: values.companySize,
       website: values.website || undefined,
