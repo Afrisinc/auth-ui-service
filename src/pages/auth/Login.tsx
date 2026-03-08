@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/auth";
@@ -125,8 +126,8 @@ const Login = () => {
             />
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
-          <p className="text-muted-foreground">
+          <h1 className="heading-subsection">Welcome back</h1>
+          <p className="text-secondary text-sm mt-2">
             {productParam
               ? `Sign in to access ${productParam}`
               : "Sign in to your account"}
@@ -135,18 +136,19 @@ const Login = () => {
 
         <div className="bg-card rounded-2xl p-8 shadow-card">
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <Input type="email" placeholder="you@example.com" {...register("email")} />
+            <div className="space-y-2">
+              <Label htmlFor="email" className="heading-label">Email</Label>
+              <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
               {errors.email && (
-                <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+                <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="heading-label">Password</Label>
               <div className="relative">
                 <Input
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   {...register("password")}
@@ -154,13 +156,14 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
+                <p className="text-sm text-destructive">{errors.password.message}</p>
               )}
             </div>
 
@@ -173,7 +176,7 @@ const Login = () => {
               </Link>
             </div>
 
-            <Button variant="gold" className="w-full" type="submit" disabled={isPending}>
+            <Button variant="default" className="w-full" type="submit" disabled={isPending}>
               {isPending ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -185,9 +188,9 @@ const Login = () => {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground mt-6">
+          <p className="text-secondary text-sm text-center mt-6">
             Don't have an account?{" "}
-            <Link to="/register" className="text-primary hover:underline">
+            <Link to="/register" className="text-primary hover:underline font-semibold">
               Sign up
             </Link>
           </p>

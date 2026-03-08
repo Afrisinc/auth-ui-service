@@ -16,7 +16,6 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Afrisinc custom variants
-        gold: "bg-gold text-charcoal font-semibold hover:bg-gold-light shadow-gold hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5",
         hero: "bg-foreground text-background font-semibold hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5",
         "hero-outline": "border-2 border-foreground/20 bg-transparent text-foreground font-medium hover:bg-foreground/5 hover:border-foreground/40 transition-all duration-300",
         forest: "bg-forest text-secondary-foreground font-semibold hover:bg-forest-light shadow-md hover:shadow-lg transition-all duration-300",

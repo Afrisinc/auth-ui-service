@@ -49,7 +49,7 @@ const VerifyEmail = () => {
             </div>
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="text-2xl font-bold text-foreground">Email Verification</h1>
+          <h1 className="heading-subsection">Email Verification</h1>
         </div>
 
         <div className="bg-card rounded-2xl p-8 shadow-card text-center space-y-4">
@@ -58,11 +58,11 @@ const VerifyEmail = () => {
               <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto">
                 <Mail className="w-8 h-8 text-muted-foreground" />
               </div>
-              <h2 className="text-lg font-semibold">Check your inbox</h2>
-              <p className="text-muted-foreground text-sm">
+              <h2 className="heading-label">Check your inbox</h2>
+              <p className="text-secondary text-sm">
                 We sent you a verification link. Click it to activate your account.
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-secondary text-sm">
                 Didn't receive it? Check your spam folder or{" "}
                 <Link to="/login" className="text-primary hover:underline">
                   sign in again
@@ -77,7 +77,7 @@ const VerifyEmail = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <Loader2 className="w-8 h-8 text-primary animate-spin" />
               </div>
-              <h2 className="text-lg font-semibold">Verifying your email...</h2>
+              <h2 className="heading-label">Verifying your email...</h2>
             </>
           )}
 
@@ -86,9 +86,9 @@ const VerifyEmail = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="text-lg font-semibold">Email verified!</h2>
-              <p className="text-muted-foreground text-sm">{message}</p>
-              <Button variant="gold" className="w-full mt-2" onClick={() => navigate("/login")}>
+              <h2 className="heading-label">Email verified!</h2>
+              <p className="text-secondary text-sm">{message}</p>
+              <Button variant="default" className="w-full mt-2" onClick={() => navigate("/login")}>
                 Sign In
               </Button>
             </>
@@ -99,8 +99,8 @@ const VerifyEmail = () => {
               <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
                 <XCircle className="w-8 h-8 text-destructive" />
               </div>
-              <h2 className="text-lg font-semibold">Verification failed</h2>
-              <p className="text-muted-foreground text-sm">{message}</p>
+              <h2 className="heading-label">Verification failed</h2>
+              <p className="text-secondary text-sm">{message}</p>
               <Button variant="outline" className="w-full mt-2" asChild>
                 <Link to="/forgot-password">Request a new link</Link>
               </Button>

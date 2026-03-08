@@ -43,8 +43,8 @@ const ForgotPassword = () => {
             </div>
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="text-2xl font-bold text-foreground">Reset your password</h1>
-          <p className="text-muted-foreground">
+          <h1 className="heading-subsection">Reset your password</h1>
+          <p className="text-secondary">
             Enter your email and we'll send you reset instructions
           </p>
         </div>
@@ -54,8 +54,8 @@ const ForgotPassword = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="text-lg font-semibold">Check your email</h2>
-              <p className="text-muted-foreground text-sm">
+              <h2 className="heading-label">Check your email</h2>
+              <p className="text-secondary text-sm">
                 We've sent password reset instructions to <strong>{email}</strong>
               </p>
               <Link to="/login">
@@ -77,7 +77,7 @@ const ForgotPassword = () => {
                   required
                 />
               </div>
-              <Button variant="gold" className="w-full" type="submit" disabled={loading}>
+              <Button variant="default" className="w-full" type="submit" disabled={loading}>
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -88,7 +88,7 @@ const ForgotPassword = () => {
                 )}
               </Button>
               <Link to="/login">
-                <Button variant="ghost" className="w-full">
+                <Button variant="default" className="w-full bg-primary/70 hover:bg-primary/80 mt-2">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Sign In
                 </Button>

@@ -30,14 +30,14 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
     <form onSubmit={handleSubmit(onNext)} className="space-y-5">
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
-          <Label htmlFor="firstName" className="text-sm font-medium">First Name</Label>
+          <Label htmlFor="firstName" className="heading-label">First Name</Label>
           <Input id="firstName" placeholder="John" {...register("firstName")} />
           {errors.firstName && (
             <p className="text-sm text-destructive">{errors.firstName.message}</p>
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="lastName" className="text-sm font-medium">Last Name</Label>
+          <Label htmlFor="lastName" className="heading-label">Last Name</Label>
           <Input id="lastName" placeholder="Doe" {...register("lastName")} />
           {errors.lastName && (
             <p className="text-sm text-destructive">{errors.lastName.message}</p>
@@ -46,7 +46,7 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+        <Label htmlFor="email" className="heading-label">Email</Label>
         <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
         {errors.email && (
           <p className="text-sm text-destructive">{errors.email.message}</p>
@@ -55,8 +55,8 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
 
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
-          <Label htmlFor="phone" className="text-sm font-medium">
-            Phone <span className="text-muted-foreground font-normal"></span>
+          <Label htmlFor="phone" className="heading-label">
+            Phone <span className="text-secondary font-normal text-sm">(optional)</span>
           </Label>
           <div className="relative">
             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -64,8 +64,8 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="location" className="text-sm font-medium">
-            Location <span className="text-muted-foreground font-normal">(optional)</span>
+          <Label htmlFor="location" className="heading-label">
+            Location <span className="text-secondary font-normal text-sm">(optional)</span>
           </Label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -75,7 +75,7 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+        <Label htmlFor="password" className="heading-label">Password</Label>
         <div className="relative">
           <Input id="password" type={showPassword ? "text" : "password"} placeholder="••••••••" {...register("password")} />
           <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label={showPassword ? "Hide password" : "Show password"}>
@@ -88,7 +88,7 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</Label>
+        <Label htmlFor="confirmPassword" className="heading-label">Confirm Password</Label>
         <div className="relative">
           <Input id="confirmPassword" type={showConfirm ? "text" : "password"} placeholder="••••••••" {...register("confirmPassword")} />
           <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label={showConfirm ? "Hide password" : "Show password"}>
@@ -100,7 +100,7 @@ const StepIdentity = ({ defaultValues, onNext }: StepIdentityProps) => {
         )}
       </div>
 
-      <Button variant="gold" type="submit" className="w-full" disabled={!isValid}>
+      <Button variant="default" type="submit" className="w-full" disabled={!isValid}>
         Continue →
       </Button>
     </form>

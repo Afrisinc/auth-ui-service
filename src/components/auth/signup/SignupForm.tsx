@@ -81,16 +81,16 @@ const SignupForm = () => {
     <div className="w-full max-w-md mx-auto space-y-6">
       {/* Logo */}
       <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-6 justify-center">
-            <img
-              src="/afrisic-logo.png"
-              alt="Afrisinc Logo"
-              className="w-10 h-10 rounded-xl object-cover"
-            />
-            <span className="text-xl font-bold text-foreground">Afrisinc</span>
-          </Link>
-        <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
-        <p className="text-muted-foreground">Join Afrisinc today</p>
+        <Link to="/" className="inline-flex items-center gap-2 mb-6 justify-center">
+          <img
+            src="/afrisic-logo.png"
+            alt="Afrisinc Logo"
+            className="w-10 h-10 rounded-xl object-cover"
+          />
+          <span className="text-xl font-bold text-foreground">Afrisinc</span>
+        </Link>
+        <h1 className="heading-subsection">Create your account</h1>
+        <p className="text-secondary text-sm mt-2">Join Afrisinc today</p>
       </div>
 
       {/* Product badge */}
@@ -106,7 +106,7 @@ const SignupForm = () => {
       <SignupStepper currentStep={step} totalSteps={TOTAL_STEPS} />
 
       {/* Form card */}
-      <div className="bg-card rounded-2xl p-8 shadow-card">
+      <div className="bg-card rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-shadow">
         {step === 0 && (
           <StepIdentity defaultValues={identityData} onNext={handleIdentityNext} />
         )}
@@ -130,9 +130,9 @@ const SignupForm = () => {
       </div>
 
       {/* Footer */}
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-secondary text-sm text-center">
         Already have an account?{" "}
-        <Link to="/login" className="text-primary hover:underline">
+        <Link to="/login" className="text-primary hover:underline font-semibold">
           Sign in
         </Link>
       </p>

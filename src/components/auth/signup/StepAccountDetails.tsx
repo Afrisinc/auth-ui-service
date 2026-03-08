@@ -55,8 +55,8 @@ const StepAccountDetails = ({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {accountType === "personal" ? (
         <div className="space-y-2">
-          <Label htmlFor="displayName" className="text-sm font-semibold">
-            Display Name <span className="text-muted-foreground font-normal">(optional)</span>
+          <Label htmlFor="displayName" className="heading-label">
+            Display Name <span className="text-secondary font-normal text-sm">(optional)</span>
           </Label>
           <Input
             id="displayName"
@@ -67,7 +67,7 @@ const StepAccountDetails = ({
       ) : (
         <>
           <div className="space-y-2">
-            <Label htmlFor="organizationName" className="text-sm font-semibold">
+            <Label htmlFor="organizationName" className="heading-label">
               Organization Name
             </Label>
             <Input
@@ -79,15 +79,15 @@ const StepAccountDetails = ({
               <p className="text-sm text-destructive">{errors.organizationName.message}</p>
             )}
             {slug && (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-secondary text-sm">
                 Slug: <span className="font-mono text-foreground">{slug}</span>
               </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="jobTitle" className="text-sm font-semibold">
-              Your Job Title <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label htmlFor="jobTitle" className="heading-label">
+              Your Job Title <span className="text-secondary font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="jobTitle"
@@ -97,8 +97,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="companyEmail" className="text-sm font-semibold">
-              Company Email
+            <Label htmlFor="companyEmail" className="heading-label">
+              Company Email <span className="text-secondary font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="companyEmail"
@@ -112,8 +112,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="industry" className="text-sm font-semibold">
-              Industry <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label htmlFor="industry" className="heading-label">
+              Industry <span className="text-secondary font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="industry"
@@ -123,8 +123,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-semibold">
-              Company Size <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label className="heading-label">
+              Company Size <span className="text-secondary font-normal text-sm">(optional)</span>
             </Label>
             <Select onValueChange={(val) => setValue("companySize", val)}>
               <SelectTrigger>
@@ -141,8 +141,8 @@ const StepAccountDetails = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="website" className="text-sm font-semibold">
-              Website <span className="text-muted-foreground font-normal">(optional)</span>
+            <Label htmlFor="website" className="heading-label">
+              Website <span className="text-secondary font-normal text-sm">(optional)</span>
             </Label>
             <Input
               id="website"
@@ -164,7 +164,7 @@ const StepAccountDetails = ({
             checked={termsAccepted}
             onChange={(e) => setTermsAccepted(e.target.checked)}
           />
-          <span className="text-muted-foreground">
+          <span className="text-secondary text-sm">
             I agree to the{" "}
             <Link to="/terms" className="text-primary hover:underline">
               Terms of Service
@@ -178,10 +178,10 @@ const StepAccountDetails = ({
       </div>
 
       <div className="flex gap-3">
-        <Button type="button" variant="outline" className="flex-1" onClick={onBack} disabled={isSubmitting}>
+        <Button type="button" variant="default" className="flex-1 bg-primary/70 hover:bg-primary/80" onClick={onBack} disabled={isSubmitting}>
           ← Back
         </Button>
-        <Button variant="gold" type="submit" className="flex-1" disabled={isSubmitting || !termsAccepted}>
+        <Button variant="default" type="submit" className="flex-1" disabled={isSubmitting || !termsAccepted}>
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

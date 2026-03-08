@@ -28,15 +28,15 @@ const options: { type: AccountType; title: string; description: string; icon: ty
 const StepAccountType = ({ selected, onSelect, onNext, onBack }: StepAccountTypeProps) => {
   return (
     <div className="space-y-5">
-      <p className="text-lg font-semibold text-center">How will you use Afrisinc?</p>
+      <p className="heading-label text-center">How will you use Afrisinc?</p>
       <div className="grid gap-3">
         {options.map(({ type, title, description, icon: Icon }) => (
           <Card
             key={type}
             onClick={() => onSelect(type)}
-            className={`cursor-pointer transition-colors hover:border-primary ${
+            className={`cursor-pointer transition-all duration-200 hover:border-primary ${
               selected === type
-                ? "border-primary bg-secondary"
+                ? "border-primary bg-primary/10 shadow-md"
                 : "border-border"
             }`}
           >
@@ -47,18 +47,18 @@ const StepAccountType = ({ selected, onSelect, onNext, onBack }: StepAccountType
                 <Icon className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-medium">{title}</p>
-                <p className="text-sm text-muted-foreground">{description}</p>
+                <p className="heading-label text-sm">{title}</p>
+                <p className="text-secondary text-sm mt-1">{description}</p>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
       <div className="flex gap-3">
-        <Button type="button" variant="outline" className="flex-1" onClick={onBack}>
+        <Button type="button" variant="default" className="flex-1 bg-primary/70 hover:bg-primary/80" onClick={onBack}>
           ← Back
         </Button>
-        <Button type="button" variant="gold" className="flex-1" disabled={!selected} onClick={onNext}>
+        <Button type="button" variant="default" className="flex-1" disabled={!selected} onClick={onNext}>
           Continue →
         </Button>
       </div>
