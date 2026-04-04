@@ -41,70 +41,115 @@ const VerifyEmail = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-hero p-6">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/login" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">A</span>
-            </div>
+      <div className="w-full max-w-md animate-fade-in">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <Link to="/login" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+            <img
+              src="/afrisic-logo.png"
+              alt="Afrisinc Logo"
+              className="w-11 h-11 rounded-xl object-cover group-hover:shadow-lg transition-shadow"
+            />
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="heading-subsection">Email Verification</h1>
+
+          <h1 className="heading-subsection mb-2">Email Verification</h1>
         </div>
 
-        <div className="bg-card rounded-2xl p-8 shadow-card text-center space-y-4">
+        {/* Content Card */}
+        <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50 text-center">
           {state === "idle" && (
-            <>
-              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-5 animate-fade-up">
+              {/* Envelope Icon */}
+              <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto border border-border/50">
                 <Mail className="w-8 h-8 text-muted-foreground" />
               </div>
-              <h2 className="heading-label">Check your inbox</h2>
-              <p className="text-secondary text-sm">
-                We sent you a verification link. Click it to activate your account.
-              </p>
-              <p className="text-secondary text-sm">
-                Didn't receive it? Check your spam folder or{" "}
-                <Link to="/login" className="text-primary hover:underline">
-                  sign in again
-                </Link>{" "}
-                to resend.
-              </p>
-            </>
+
+              {/* Idle Message */}
+              <div className="space-y-2">
+                <h2 className="heading-label">Check your email</h2>
+                <p className="text-secondary text-sm leading-relaxed">
+                  We've sent a verification link to your inbox. Click it to activate your account.
+                </p>
+              </div>
+
+              {/* Spam Note */}
+              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
+                <p className="text-xs text-muted-foreground">
+                  💡 Not seeing the email? Check your spam folder or{" "}
+                  <Link to="/login" className="font-semibold text-primary hover:text-primary/80">
+                    request a new link
+                  </Link>
+                </p>
+              </div>
+            </div>
           )}
 
           {state === "loading" && (
-            <>
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-5 animate-fade-up">
+              {/* Loading Spinner */}
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/20">
                 <Loader2 className="w-8 h-8 text-primary animate-spin" />
               </div>
-              <h2 className="heading-label">Verifying your email...</h2>
-            </>
+
+              {/* Loading Message */}
+              <div>
+                <h2 className="heading-label">Verifying your email...</h2>
+                <p className="text-secondary text-sm mt-2">This should only take a moment.</p>
+              </div>
+            </div>
           )}
 
           {state === "success" && (
-            <>
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-6 animate-fade-up">
+              {/* Success Icon */}
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/20">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="heading-label">Email verified!</h2>
-              <p className="text-secondary text-sm">{message}</p>
-              <Button variant="default" className="w-full mt-2" onClick={() => navigate("/login")}>
-                Sign In
+
+              {/* Success Message */}
+              <div className="space-y-3">
+                <h2 className="heading-label">Email verified!</h2>
+                <p className="text-secondary text-sm leading-relaxed">{message}</p>
+              </div>
+
+              {/* CTA Button */}
+              <Button
+                variant="default"
+                className="w-full h-11 font-semibold rounded-lg shadow-primary hover:shadow-lg transition-all"
+                onClick={() => navigate("/login")}
+              >
+                Continue to Sign In
               </Button>
-            </>
+            </div>
           )}
 
           {state === "error" && (
-            <>
-              <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-6 animate-fade-up">
+              {/* Error Icon */}
+              <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto border border-destructive/20">
                 <XCircle className="w-8 h-8 text-destructive" />
               </div>
-              <h2 className="heading-label">Verification failed</h2>
-              <p className="text-secondary text-sm">{message}</p>
-              <Button variant="outline" className="w-full mt-2" asChild>
-                <Link to="/forgot-password">Request a new link</Link>
-              </Button>
-            </>
+
+              {/* Error Message */}
+              <div className="space-y-3">
+                <h2 className="heading-label">Verification failed</h2>
+                <p className="text-secondary text-sm leading-relaxed">{message}</p>
+                <p className="text-xs text-muted-foreground">
+                  Verification links expire after 24 hours for security.
+                </p>
+              </div>
+
+              {/* Recovery Options */}
+              <div className="space-y-2">
+                <Button variant="default" className="w-full h-11 font-semibold" asChild>
+                  <Link to="/login">Back to Sign In</Link>
+                </Button>
+                <Button variant="outline" className="w-full h-11 font-semibold" asChild>
+                  <Link to="/forgot-password">Request New Link</Link>
+                </Button>
+              </div>
+            </div>
           )}
         </div>
       </div>

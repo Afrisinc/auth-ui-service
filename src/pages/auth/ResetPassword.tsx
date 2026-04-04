@@ -83,93 +83,126 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-hero p-6">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/login" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">A</span>
-            </div>
+      <div className="w-full max-w-md animate-fade-in">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <Link to="/login" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+            <img
+              src="/afrisic-logo.png"
+              alt="Afrisinc Logo"
+              className="w-11 h-11 rounded-xl object-cover group-hover:shadow-lg transition-shadow"
+            />
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="heading-subsection">Set new password</h1>
-          <p className="text-secondary">
-            Choose a strong password for your account
+
+          <h1 className="heading-subsection mb-3">Create a new password</h1>
+          <p className="text-sm text-muted-foreground">
+            Enter a strong password to secure your account
           </p>
         </div>
 
-        <div className="bg-card rounded-2xl p-8 shadow-card">
+        {/* Content Card */}
+        <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50">
           {done ? (
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="text-center space-y-6 animate-fade-up">
+              {/* Success Icon */}
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/20">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="heading-label">Password updated</h2>
-              <p className="text-secondary text-sm">
-                Your password has been reset successfully.
-              </p>
-              <Button variant="default" className="w-full mt-4" onClick={() => navigate("/login")}>
-                Sign In
+
+              {/* Success Message */}
+              <div className="space-y-2">
+                <h2 className="heading-label">Password updated</h2>
+                <p className="text-secondary text-sm leading-relaxed">
+                  Your password has been reset successfully. You can now sign in with your new password.
+                </p>
+              </div>
+
+              {/* Sign In Button */}
+              <Button
+                variant="default"
+                className="w-full h-11 font-semibold rounded-lg shadow-primary hover:shadow-lg transition-all"
+                onClick={() => navigate("/login")}
+              >
+                Continue to Sign In
               </Button>
             </div>
           ) : (
-            <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <label className="block text-sm font-medium mb-2">New Password</label>
+            <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+              {/* New Password Field */}
+              <div className="space-y-2.5">
+                <label className="text-sm font-semibold text-foreground">New Password</label>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
+                    placeholder="Create a strong password"
                     {...register("password")}
+                    className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all pr-10"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
+                  <p className="text-xs text-destructive font-medium">{errors.password.message}</p>
                 )}
+                <p className="text-xs text-muted-foreground">
+                  Use 6+ characters with a mix of letters, numbers, and symbols
+                </p>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Confirm Password</label>
+              {/* Confirm Password Field */}
+              <div className="space-y-2.5">
+                <label className="text-sm font-semibold text-foreground">Confirm Password</label>
                 <div className="relative">
                   <Input
                     type={showConfirm ? "text" : "password"}
-                    placeholder="••••••••"
+                    placeholder="Re-enter your password"
                     {...register("confirmPassword")}
+                    className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all pr-10"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirm(!showConfirm)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-sm text-destructive mt-1">
+                  <p className="text-xs text-destructive font-medium">
                     {errors.confirmPassword.message}
                   </p>
                 )}
               </div>
 
-              <Button variant="default" className="w-full" type="submit" disabled={loading}>
+              {/* CTA Button */}
+              <Button
+                variant="default"
+                className="w-full h-11 font-semibold rounded-lg shadow-primary hover:shadow-lg transition-all mt-6"
+                type="submit"
+                disabled={loading}
+              >
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Resetting...
+                    Updating password...
                   </>
                 ) : (
                   "Reset Password"
                 )}
               </Button>
 
-              <Link to="/login">
-                <Button variant="default" className="w-full bg-primary/70 hover:bg-primary/80 mt-2">
+              {/* Back Link */}
+              <Link to="/login" className="block">
+                <Button
+                  variant="outline"
+                  className="w-full h-11 font-semibold mt-2"
+                >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Sign In
                 </Button>

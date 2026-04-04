@@ -116,67 +116,100 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-hero p-6">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-         <Link to="/" className="inline-flex items-center gap-2 mb-6 justify-center">
+      <div className="w-full max-w-md animate-fade-in">
+        {/* Header Section */}
+        <div className="text-center mb-10">
+          <Link to="/" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
             <img
               src="/afrisic-logo.png"
               alt="Afrisinc Logo"
-              className="w-10 h-10 rounded-xl object-cover"
+              className="w-11 h-11 rounded-xl object-cover group-hover:shadow-lg transition-shadow"
             />
             <span className="text-xl font-bold text-foreground">Afrisinc</span>
           </Link>
-          <h1 className="heading-subsection">Welcome back</h1>
-          <p className="text-secondary text-sm mt-2">
+
+          <h1 className="heading-subsection mb-3">Welcome back</h1>
+          <p className="text-sm text-muted-foreground">
             {productParam
-              ? `Sign in to access ${productParam}`
-              : "Sign in to your account"}
+              ? `Access ${productParam.charAt(0).toUpperCase()}${productParam.slice(1)} and manage your identity`
+              : "Sign in to your Afrisinc account"}
           </p>
         </div>
 
-        <div className="bg-card rounded-2xl p-8 shadow-card">
-          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-2">
-              <Label htmlFor="email" className="heading-label">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
+        {/* Login Card */}
+        <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50 hover:shadow-card-hover transition-all duration-300">
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+            {/* Email Field */}
+            <div className="space-y-2.5">
+              <Label htmlFor="email" className="text-sm font-semibold text-foreground">
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                {...register("email")}
+                className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
+              />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-xs text-destructive font-medium">{errors.email.message}</p>
               )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password" className="heading-label">Password</Label>
+            {/* Password Field */}
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-sm font-semibold text-foreground">
+                  Password
+                </Label>
+                <Link
+                  to="/forgot-password"
+                  className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
+                >
+                  Forgot?
+                </Link>
+              </div>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   {...register("password")}
+                  className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
+                <p className="text-xs text-destructive font-medium">{errors.password.message}</p>
               )}
             </div>
 
-            <div className="flex justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="rounded" /> Remember me
+            {/* Remember Me Checkbox */}
+            <div className="flex items-center gap-2 pt-1">
+              <input
+                type="checkbox"
+                id="remember"
+                className="w-4 h-4 rounded border-border bg-muted cursor-pointer"
+              />
+              <label htmlFor="remember" className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                Keep me signed in
               </label>
-              <Link to="/forgot-password" className="text-primary hover:underline">
-                Forgot password?
-              </Link>
             </div>
 
-            <Button variant="default" className="w-full" type="submit" disabled={isPending}>
+            {/* Sign In Button */}
+            <Button
+              variant="default"
+              className="w-full h-11 font-semibold rounded-lg shadow-primary hover:shadow-lg transition-all mt-6"
+              type="submit"
+              disabled={isPending}
+            >
               {isPending ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -188,13 +221,24 @@ const Login = () => {
             </Button>
           </form>
 
-          <p className="text-secondary text-sm text-center mt-6">
-            Don't have an account?{" "}
-            <Link to="/register" className="text-primary hover:underline font-semibold">
-              Sign up
-            </Link>
-          </p>
+          {/* Sign Up Link */}
+          <div className="mt-6 pt-6 border-t border-border/50 text-center">
+            <p className="text-sm text-muted-foreground">
+              New to Afrisinc?{" "}
+              <Link
+                to="/register"
+                className="font-semibold text-primary hover:text-primary/80 transition-colors"
+              >
+                Create an account
+              </Link>
+            </p>
+          </div>
         </div>
+
+        {/* Security Note */}
+        <p className="text-center text-xs text-muted-foreground/60 mt-6">
+          Your data is encrypted and secured with industry-standard protocols
+        </p>
       </div>
     </div>
   );

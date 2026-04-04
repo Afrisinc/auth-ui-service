@@ -85,35 +85,40 @@ const SignupForm = () => {
   }, [accountType, identityData, productCode, mutate, handleSignupSuccess, handleSignupError]);
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-6">
-      {/* Logo */}
-      <div className="text-center mb-8">
-        <Link to="/" className="inline-flex items-center gap-2 mb-6 justify-center">
+    <div className="w-full max-w-md mx-auto animate-fade-in">
+      {/* Header Section */}
+      <div className="text-center mb-10">
+        <Link to="/" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
           <img
             src="/afrisic-logo.png"
             alt="Afrisinc Logo"
-            className="w-10 h-10 rounded-xl object-cover"
+            className="w-11 h-11 rounded-xl object-cover group-hover:shadow-lg transition-shadow"
           />
           <span className="text-xl font-bold text-foreground">Afrisinc</span>
         </Link>
-        <h1 className="heading-subsection">Create your account</h1>
-        <p className="text-secondary text-sm mt-2">Join Afrisinc today</p>
+
+        <h1 className="heading-subsection mb-3">Create your account</h1>
+        <p className="text-sm text-muted-foreground">
+          Join the Afrisinc Identity Platform and manage your digital presence
+        </p>
       </div>
 
-      {/* Product badge */}
+      {/* Product Context Badge */}
       {productCode && (
-        <div className="flex justify-center">
-          <Badge variant="secondary">
-            You're signing up for {productCode.charAt(0).toUpperCase() + productCode.slice(1).toLowerCase()}
+        <div className="flex justify-center mb-6 animate-fade-up">
+          <Badge className="bg-primary/10 text-primary border border-primary/20 px-4 py-1.5 font-medium">
+            Setting up {productCode.charAt(0).toUpperCase() + productCode.slice(1).toLowerCase()}
           </Badge>
         </div>
       )}
 
-      {/* Stepper */}
-      <SignupStepper currentStep={step} totalSteps={TOTAL_STEPS} />
+      {/* Progress Stepper */}
+      <div className="mb-8">
+        <SignupStepper currentStep={step} totalSteps={TOTAL_STEPS} />
+      </div>
 
-      {/* Form card */}
-      <div className="bg-card rounded-2xl p-8 shadow-card hover:shadow-card-hover transition-shadow">
+      {/* Form Card */}
+      <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50 hover:shadow-card-hover transition-all duration-300">
         {step === 0 && (
           <StepIdentity defaultValues={identityData} onNext={handleIdentityNext} />
         )}
@@ -136,12 +141,19 @@ const SignupForm = () => {
         )}
       </div>
 
-      {/* Footer */}
-      <p className="text-secondary text-sm text-center">
-        Already have an account?{" "}
-        <Link to="/login" className="text-primary hover:underline font-semibold">
-          Sign in
-        </Link>
+      {/* Sign In Link */}
+      <div className="mt-6 text-center">
+        <p className="text-sm text-muted-foreground">
+          Already have an account?{" "}
+          <Link to="/login" className="font-semibold text-primary hover:text-primary/80 transition-colors">
+            Sign in here
+          </Link>
+        </p>
+      </div>
+
+      {/* Security Note */}
+      <p className="text-center text-xs text-muted-foreground/60 mt-5">
+        All information is encrypted and secure
       </p>
     </div>
   );
