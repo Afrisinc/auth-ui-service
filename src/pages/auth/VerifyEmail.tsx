@@ -29,7 +29,9 @@ const VerifyEmail = () => {
           setMessage("Your email has been verified successfully.");
         } else {
           setState("error");
-          setMessage(res.resp_msg || "Verification failed. The link may have expired.");
+          setMessage(
+            res.resp_msg || "Verification failed. The link may have expired."
+          );
         }
       },
       onError: () => {
@@ -44,7 +46,10 @@ const VerifyEmail = () => {
       <div className="w-full max-w-md animate-fade-in">
         {/* Header */}
         <div className="text-center mb-10">
-          <Link to="/login" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2.5 mb-8 justify-center group"
+          >
             <img
               src="/afrisic-logo.png"
               alt="Afrisinc Logo"
@@ -69,7 +74,8 @@ const VerifyEmail = () => {
               <div className="space-y-2">
                 <h2 className="heading-label">Check your email</h2>
                 <p className="text-secondary text-sm leading-relaxed">
-                  We've sent a verification link to your inbox. Click it to activate your account.
+                  We've sent a verification link to your inbox. Click it to
+                  activate your account.
                 </p>
               </div>
 
@@ -77,7 +83,10 @@ const VerifyEmail = () => {
               <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
                 <p className="text-xs text-muted-foreground">
                   💡 Not seeing the email? Check your spam folder or{" "}
-                  <Link to="/login" className="font-semibold text-primary hover:text-primary/80">
+                  <Link
+                    to="/login"
+                    className="font-semibold text-primary hover:text-primary/80"
+                  >
                     request a new link
                   </Link>
                 </p>
@@ -95,7 +104,9 @@ const VerifyEmail = () => {
               {/* Loading Message */}
               <div>
                 <h2 className="heading-label">Verifying your email...</h2>
-                <p className="text-secondary text-sm mt-2">This should only take a moment.</p>
+                <p className="text-secondary text-sm mt-2">
+                  This should only take a moment.
+                </p>
               </div>
             </div>
           )}
@@ -110,7 +121,9 @@ const VerifyEmail = () => {
               {/* Success Message */}
               <div className="space-y-3">
                 <h2 className="heading-label">Email verified!</h2>
-                <p className="text-secondary text-sm leading-relaxed">{message}</p>
+                <p className="text-secondary text-sm leading-relaxed">
+                  {message}
+                </p>
               </div>
 
               {/* CTA Button */}
@@ -134,7 +147,9 @@ const VerifyEmail = () => {
               {/* Error Message */}
               <div className="space-y-3">
                 <h2 className="heading-label">Verification failed</h2>
-                <p className="text-secondary text-sm leading-relaxed">{message}</p>
+                <p className="text-secondary text-sm leading-relaxed">
+                  {message}
+                </p>
                 <p className="text-xs text-muted-foreground">
                   Verification links expire after 24 hours for security.
                 </p>
@@ -142,10 +157,18 @@ const VerifyEmail = () => {
 
               {/* Recovery Options */}
               <div className="space-y-2">
-                <Button variant="default" className="w-full h-11 font-semibold" asChild>
+                <Button
+                  variant="default"
+                  className="w-full h-11 font-semibold"
+                  asChild
+                >
                   <Link to="/login">Back to Sign In</Link>
                 </Button>
-                <Button variant="outline" className="w-full h-11 font-semibold" asChild>
+                <Button
+                  variant="outline"
+                  className="w-full h-11 font-semibold"
+                  asChild
+                >
                   <Link to="/forgot-password">Request New Link</Link>
                 </Button>
               </div>

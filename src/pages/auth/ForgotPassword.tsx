@@ -38,7 +38,10 @@ const ForgotPassword = () => {
       <div className="w-full max-w-md animate-fade-in">
         {/* Header */}
         <div className="text-center mb-10">
-          <Link to="/" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2.5 mb-8 justify-center group"
+          >
             <img
               src="/afrisic-logo.png"
               alt="Afrisinc Logo"
@@ -66,7 +69,8 @@ const ForgotPassword = () => {
               <div className="space-y-3">
                 <h2 className="heading-label">Check your inbox</h2>
                 <p className="text-secondary text-sm leading-relaxed">
-                  We've sent password reset instructions to <span className="font-semibold text-foreground">{email}</span>
+                  We've sent password reset instructions to{" "}
+                  <span className="font-semibold text-foreground">{email}</span>
                 </p>
                 <p className="text-xs text-muted-foreground">
                   The reset link will expire in 24 hours for security reasons.
@@ -85,7 +89,10 @@ const ForgotPassword = () => {
             <form className="space-y-5" onSubmit={handleSubmit}>
               {/* Email Field */}
               <div className="space-y-2.5">
-                <label htmlFor="email" className="text-sm font-semibold text-foreground">
+                <label
+                  htmlFor="email"
+                  className="text-sm font-semibold text-foreground"
+                >
                   Email Address
                 </label>
                 <div className="relative">

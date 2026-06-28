@@ -16,7 +16,6 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 
-
 // Utility
 import NotFound from "./pages/NotFound";
 
@@ -34,7 +33,7 @@ const App = () => {
     // On app load, check if theme cookie exists and apply it
     const cookieTheme = getThemeFromCookie();
     if (cookieTheme) {
-      document.documentElement.classList.toggle('dark', cookieTheme === 'dark');
+      document.documentElement.classList.toggle("dark", cookieTheme === "dark");
     }
   }, []);
 

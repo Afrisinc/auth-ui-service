@@ -11,8 +11,12 @@ import { getRuntimeConfig } from "@/lib/config";
 
 const ResetPasswordSchema = z
   .object({
-    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
-    confirmPassword: z.string().min(6, { message: "Please confirm your password" }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters" }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: "Please confirm your password" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -53,17 +57,21 @@ const ResetPassword = () => {
     setLoading(true);
     try {
       const config = getRuntimeConfig();
-      const response = await fetch(`${config.serverUrl}/auth/reset-password/confirm`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password: formData.password }),
-      });
+      const response = await fetch(
+        `${config.serverUrl}/auth/reset-password/confirm`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, password: formData.password }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
         toast({
           title: "Reset Failed",
-          description: errorData.resp_msg || "Password reset failed. Please try again.",
+          description:
+            errorData.resp_msg || "Password reset failed. Please try again.",
           variant: "destructive",
         });
         return;
@@ -86,7 +94,10 @@ const ResetPassword = () => {
       <div className="w-full max-w-md animate-fade-in">
         {/* Header */}
         <div className="text-center mb-10">
-          <Link to="/login" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2.5 mb-8 justify-center group"
+          >
             <img
               src="/afrisic-logo.png"
               alt="Afrisinc Logo"
@@ -114,7 +125,8 @@ const ResetPassword = () => {
               <div className="space-y-2">
                 <h2 className="heading-label">Password updated</h2>
                 <p className="text-secondary text-sm leading-relaxed">
-                  Your password has been reset successfully. You can now sign in with your new password.
+                  Your password has been reset successfully. You can now sign in
+                  with your new password.
                 </p>
               </div>
 
@@ -131,7 +143,9 @@ const ResetPassword = () => {
             <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
               {/* New Password Field */}
               <div className="space-y-2.5">
-                <label className="text-sm font-semibold text-foreground">New Password</label>
+                <label className="text-sm font-semibold text-foreground">
+                  New Password
+                </label>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -148,7 +162,9 @@ const ResetPassword = () => {
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-xs text-destructive font-medium">{errors.password.message}</p>
+                  <p className="text-xs text-destructive font-medium">
+                    {errors.password.message}
+                  </p>
                 )}
                 <p className="text-xs text-muted-foreground">
                   Use 6+ characters with a mix of letters, numbers, and symbols
@@ -157,7 +173,9 @@ const ResetPassword = () => {
 
               {/* Confirm Password Field */}
               <div className="space-y-2.5">
-                <label className="text-sm font-semibold text-foreground">Confirm Password</label>
+                <label className="text-sm font-semibold text-foreground">
+                  Confirm Password
+                </label>
                 <div className="relative">
                   <Input
                     type={showConfirm ? "text" : "password"}

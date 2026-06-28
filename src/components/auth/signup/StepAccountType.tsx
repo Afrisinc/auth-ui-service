@@ -10,7 +10,13 @@ interface StepAccountTypeProps {
   onBack: () => void;
 }
 
-const options: { type: AccountType; title: string; description: string; features: string[]; icon: typeof User }[] = [
+const options: {
+  type: AccountType;
+  title: string;
+  description: string;
+  features: string[];
+  icon: typeof User;
+}[] = [
   {
     type: "personal",
     title: "Personal Account",
@@ -27,13 +33,22 @@ const options: { type: AccountType; title: string; description: string; features
   },
 ];
 
-const StepAccountType = ({ selected, onSelect, onNext, onBack }: StepAccountTypeProps) => {
+const StepAccountType = ({
+  selected,
+  onSelect,
+  onNext,
+  onBack,
+}: StepAccountTypeProps) => {
   return (
     <div className="space-y-6">
       {/* Section Header */}
       <div className="pb-4 border-b border-border/50">
-        <h2 className="text-lg font-semibold text-foreground mb-1">Account Type</h2>
-        <p className="text-xs text-muted-foreground">Choose what best fits your needs</p>
+        <h2 className="text-lg font-semibold text-foreground mb-1">
+          Account Type
+        </h2>
+        <p className="text-xs text-muted-foreground">
+          Choose what best fits your needs
+        </p>
       </div>
 
       {/* Account Type Options */}
@@ -51,11 +66,13 @@ const StepAccountType = ({ selected, onSelect, onNext, onBack }: StepAccountType
             <CardContent className="p-5">
               <div className="flex gap-4">
                 {/* Icon Container */}
-                <div className={`flex h-12 w-12 items-center justify-center rounded-lg flex-shrink-0 ${
-                  selected === type
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted/50 text-muted-foreground"
-                }`}>
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-lg flex-shrink-0 ${
+                    selected === type
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted/50 text-muted-foreground"
+                  }`}
+                >
                   <Icon className="h-6 w-6" />
                 </div>
 
@@ -63,8 +80,12 @@ const StepAccountType = ({ selected, onSelect, onNext, onBack }: StepAccountType
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h3 className="font-semibold text-foreground text-sm">{title}</h3>
-                      <p className="text-secondary text-xs mt-1">{description}</p>
+                      <h3 className="font-semibold text-foreground text-sm">
+                        {title}
+                      </h3>
+                      <p className="text-secondary text-xs mt-1">
+                        {description}
+                      </p>
                     </div>
                     {selected === type && (
                       <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />

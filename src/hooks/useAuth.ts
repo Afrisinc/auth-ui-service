@@ -1,12 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 import {
   loginService,
   registrationService,
   signupService,
   verifyEmailService,
-} from '@/services/auth';
-import type { LoginSchemaType, RegisterSchemaType } from '@/lib/schemas/auth';
-import type { SignupPayload } from '@/components/auth/signup/schemas';
+} from "@/services/auth";
+import type { LoginSchemaType, RegisterSchemaType } from "@/lib/schemas/auth";
+import type { SignupPayload } from "@/components/auth/signup/schemas";
 
 export function useLogin() {
   return useMutation({

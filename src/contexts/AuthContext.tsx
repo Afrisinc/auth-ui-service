@@ -14,7 +14,11 @@ interface AuthContextType {
   token: string | null;
   loading: boolean;
   isAdmin: boolean;
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ error: Error | null }>;
+  signUp: (
+    email: string,
+    password: string,
+    fullName?: string
+  ) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: Error | null }>;
@@ -41,7 +45,9 @@ const extractRolesFromToken = (token: string): string[] => {
   return [];
 };
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<CustomUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -81,12 +87,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (!response.ok) {
         const errorData = await response.json();
-        return { error: new Error(errorData.resp_msg || "Registration failed") };
+        return {
+          error: new Error(errorData.resp_msg || "Registration failed"),
+        };
       }
 
       return { error: null };
     } catch (error) {
-      return { error: error instanceof Error ? error : new Error("Registration failed") };
+      return {
+        error:
+          error instanceof Error ? error : new Error("Registration failed"),
+      };
     }
   };
 
@@ -110,10 +121,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (data.success && data.data?.token && data.data?.user_id) {
         const tokenValue: string = data.data.token;
         // Roles may come from response or JWT
-        const roles: string[] =
-          Array.isArray(data.data.roles)
-            ? data.data.roles
-            : data.data.role
+        const roles: string[] = Array.isArray(data.data.roles)
+          ? data.data.roles
+          : data.data.role
             ? [data.data.role]
             : extractRolesFromToken(tokenValue);
 
@@ -132,7 +142,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       return { error: new Error(data.resp_msg || "Login failed") };
     } catch (error) {
-      return { error: error instanceof Error ? error : new Error("Login failed") };
+      return {
+        error: error instanceof Error ? error : new Error("Login failed"),
+      };
     }
   };
 
@@ -155,12 +167,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (!response.ok) {
         const errorData = await response.json();
-        return { error: new Error(errorData.resp_msg || "Password reset failed") };
+        return {
+          error: new Error(errorData.resp_msg || "Password reset failed"),
+        };
       }
 
       return { error: null };
     } catch (error) {
-      return { error: error instanceof Error ? error : new Error("Password reset failed") };
+      return {
+        error:
+          error instanceof Error ? error : new Error("Password reset failed"),
+      };
     }
   };
 

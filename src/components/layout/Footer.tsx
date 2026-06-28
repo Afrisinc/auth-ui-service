@@ -33,12 +33,15 @@ export const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">A</span>
+                <span className="text-primary-foreground font-bold text-lg">
+                  A
+                </span>
               </div>
               <span className="text-xl font-bold">Afrisinc</span>
             </div>
             <p className="text-background/60 text-sm leading-relaxed">
-              Building the future of technology and media from Africa to the world.
+              Building the future of technology and media from Africa to the
+              world.
             </p>
           </div>
 

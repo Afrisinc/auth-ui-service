@@ -15,7 +15,7 @@ export function ThemeToggle() {
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
     // Sync theme to cookie for cross-domain sharing
-    setThemeCookie(newTheme as 'light' | 'dark' | 'system');
+    setThemeCookie(newTheme as "light" | "dark" | "system");
   };
 
   return (

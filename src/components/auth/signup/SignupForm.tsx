@@ -7,7 +7,12 @@ import SignupStepper from "./SignupStepper";
 import StepIdentity from "./StepIdentity";
 import StepAccountType from "./StepAccountType";
 import StepAccountDetails from "./StepAccountDetails";
-import type { IdentityValues, AccountDetailsValues, AccountType, SignupPayload } from "./schemas";
+import type {
+  IdentityValues,
+  AccountDetailsValues,
+  AccountType,
+  SignupPayload,
+} from "./schemas";
 
 const TOTAL_STEPS = 3;
 
@@ -23,17 +28,20 @@ const SignupForm = () => {
 
   const { mutate, isPending } = useSignup();
 
-  const handleSignupSuccess = useCallback((res: any) => {
-    if (res.success && res.resp_code === 1000) {
-      toast.success("Account created! You can now sign in.");
-      const destination = redirectUri
-        ? `/login?redirect_uri=${encodeURIComponent(redirectUri)}${productCode ? `&product=${productCode}` : ""}`
-        : "/login";
-      navigate(destination);
-    } else {
-      toast.error(res.resp_msg || "Registration failed. Please try again.");
-    }
-  }, [redirectUri, productCode, navigate]);
+  const handleSignupSuccess = useCallback(
+    (res: any) => {
+      if (res.success && res.resp_code === 1000) {
+        toast.success("Account created! You can now sign in.");
+        const destination = redirectUri
+          ? `/login?redirect_uri=${encodeURIComponent(redirectUri)}${productCode ? `&product=${productCode}` : ""}`
+          : "/login";
+        navigate(destination);
+      } else {
+        toast.error(res.resp_msg || "Registration failed. Please try again.");
+      }
+    },
+    [redirectUri, productCode, navigate]
+  );
 
   const handleSignupError = useCallback((error: any) => {
     // Extract error message from Axios error response or generic error
@@ -54,41 +62,56 @@ const SignupForm = () => {
     setStep(2);
   }, []);
 
-  const handleFinalSubmit = useCallback((values: AccountDetailsValues) => {
-    if (!accountType) return;
+  const handleFinalSubmit = useCallback(
+    (values: AccountDetailsValues) => {
+      if (!accountType) return;
 
-    const payload: SignupPayload = {
-      firstName: identityData.firstName!,
-      lastName: identityData.lastName!,
-      email: identityData.email!,
-      password: identityData.password!,
-      phone: identityData.phone,
-      location: identityData.location || undefined,
-      account_type: accountType,
-      account_name: accountType === "company"
-        ? values.organizationName || ""
-        : values.displayName || `${identityData.firstName || ""} ${identityData.lastName || ""}`.trim(),
-      product_code: productCode,
-      displayName: values.displayName,
-      organizationName: values.organizationName,
-      jobTitle: values.jobTitle,
-      companyEmail: values.companyEmail || undefined,
-      industry: values.industry,
-      companySize: values.companySize,
-      website: values.website || undefined,
-    };
+      const payload: SignupPayload = {
+        firstName: identityData.firstName!,
+        lastName: identityData.lastName!,
+        email: identityData.email!,
+        password: identityData.password!,
+        phone: identityData.phone,
+        location: identityData.location || undefined,
+        account_type: accountType,
+        account_name:
+          accountType === "company"
+            ? values.organizationName || ""
+            : values.displayName ||
+              `${identityData.firstName || ""} ${identityData.lastName || ""}`.trim(),
+        product_code: productCode,
+        displayName: values.displayName,
+        organizationName: values.organizationName,
+        jobTitle: values.jobTitle,
+        companyEmail: values.companyEmail || undefined,
+        industry: values.industry,
+        companySize: values.companySize,
+        website: values.website || undefined,
+      };
 
-    mutate(payload, {
-      onSuccess: handleSignupSuccess,
-      onError: handleSignupError,
-    });
-  }, [accountType, identityData, productCode, mutate, handleSignupSuccess, handleSignupError]);
+      mutate(payload, {
+        onSuccess: handleSignupSuccess,
+        onError: handleSignupError,
+      });
+    },
+    [
+      accountType,
+      identityData,
+      productCode,
+      mutate,
+      handleSignupSuccess,
+      handleSignupError,
+    ]
+  );
 
   return (
     <div className="w-full max-w-md mx-auto animate-fade-in">
       {/* Header Section */}
       <div className="text-center mb-10">
-        <Link to="/" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2.5 mb-8 justify-center group"
+        >
           <img
             src="/afrisic-logo.png"
             alt="Afrisinc Logo"
@@ -107,7 +130,9 @@ const SignupForm = () => {
       {productCode && (
         <div className="flex justify-center mb-6 animate-fade-up">
           <Badge className="bg-primary/10 text-primary border border-primary/20 px-4 py-1.5 font-medium">
-            Setting up {productCode.charAt(0).toUpperCase() + productCode.slice(1).toLowerCase()}
+            Setting up{" "}
+            {productCode.charAt(0).toUpperCase() +
+              productCode.slice(1).toLowerCase()}
           </Badge>
         </div>
       )}
@@ -120,7 +145,10 @@ const SignupForm = () => {
       {/* Form Card */}
       <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50 hover:shadow-card-hover transition-all duration-300">
         {step === 0 && (
-          <StepIdentity defaultValues={identityData} onNext={handleIdentityNext} />
+          <StepIdentity
+            defaultValues={identityData}
+            onNext={handleIdentityNext}
+          />
         )}
         {step === 1 && (
           <StepAccountType
@@ -145,7 +173,10 @@ const SignupForm = () => {
       <div className="mt-6 text-center">
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link to="/login" className="font-semibold text-primary hover:text-primary/80 transition-colors">
+          <Link
+            to="/login"
+            className="font-semibold text-primary hover:text-primary/80 transition-colors"
+          >
             Sign in here
           </Link>
         </p>

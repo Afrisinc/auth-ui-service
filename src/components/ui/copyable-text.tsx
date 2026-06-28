@@ -33,10 +33,7 @@ interface CopyableTextProps extends React.HTMLAttributes<HTMLDivElement> {
   showCopy?: boolean;
 }
 
-export const CopyableText = React.forwardRef<
-  HTMLDivElement,
-  CopyableTextProps
->(
+export const CopyableText = React.forwardRef<HTMLDivElement, CopyableTextProps>(
   (
     {
       text,

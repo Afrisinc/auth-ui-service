@@ -3,23 +3,23 @@
  * Uses cookies with domain=.afrisinc.com to sync theme across all Afrisinc subdomains
  */
 
-const THEME_COOKIE_NAME = 'afrisinc_theme';
-const THEME_COOKIE_DOMAIN = '.afrisinc.com';
+const THEME_COOKIE_NAME = "afrisinc_theme";
+const THEME_COOKIE_DOMAIN = ".afrisinc.com";
 const THEME_COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 year in seconds
 
-export type Theme = 'light' | 'dark' | 'system';
+export type Theme = "light" | "dark" | "system";
 
 /**
  * Get theme preference from shared cookie
  * Returns null if cookie doesn't exist
  */
 export function getThemeFromCookie(): Theme | null {
-  const cookies = document.cookie.split(';');
+  const cookies = document.cookie.split(";");
   for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
+    const [name, value] = cookie.trim().split("=");
     if (name === THEME_COOKIE_NAME) {
       const decoded = decodeURIComponent(value);
-      if (decoded === 'light' || decoded === 'dark' || decoded === 'system') {
+      if (decoded === "light" || decoded === "dark" || decoded === "system") {
         return decoded;
       }
     }
@@ -54,12 +54,17 @@ export function getCurrentTheme(): Theme {
   if (cookieTheme) return cookieTheme;
 
   // Fallback to localStorage for backward compatibility
-  const storageTheme = localStorage.getItem('theme');
-  if (storageTheme && (storageTheme === 'light' || storageTheme === 'dark' || storageTheme === 'system')) {
+  const storageTheme = localStorage.getItem("theme");
+  if (
+    storageTheme &&
+    (storageTheme === "light" ||
+      storageTheme === "dark" ||
+      storageTheme === "system")
+  ) {
     return storageTheme as Theme;
   }
 
-  return 'system';
+  return "system";
 }
 
 /**
@@ -69,10 +74,12 @@ export function getCurrentTheme(): Theme {
 export function applyTheme(theme: Theme): void {
   const html = document.documentElement;
 
-  if (theme === 'system') {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    html.classList.toggle('dark', prefersDark);
+  if (theme === "system") {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    html.classList.toggle("dark", prefersDark);
   } else {
-    html.classList.toggle('dark', theme === 'dark');
+    html.classList.toggle("dark", theme === "dark");
   }
 }

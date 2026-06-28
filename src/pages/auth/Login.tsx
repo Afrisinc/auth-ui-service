@@ -17,7 +17,11 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginSchemaType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: { email: "", password: "" },
   });
@@ -32,7 +36,7 @@ const Login = () => {
   const onSubmit = (data: LoginSchemaType) => {
     const payload = {
       ...data,
-      ...(productParam && { product_code: productParam })    
+      ...(productParam && { product_code: productParam }),
     };
     mutate(payload as LoginSchemaType, {
       onSuccess: (res: any) => {
@@ -47,12 +51,14 @@ const Login = () => {
             roles = [res.data.role];
           } else {
             try {
-              const decoded = jwtDecode<{ roles?: string[]; role?: string }>(token);
+              const decoded = jwtDecode<{ roles?: string[]; role?: string }>(
+                token
+              );
               roles = Array.isArray(decoded.roles)
                 ? decoded.roles
                 : decoded.role
-                ? [decoded.role]
-                : [];
+                  ? [decoded.role]
+                  : [];
             } catch {
               roles = [];
             }
@@ -69,7 +75,10 @@ const Login = () => {
             })
           );
 
-          toast({ title: "Welcome back!", description: "You've successfully signed in." });
+          toast({
+            title: "Welcome back!",
+            description: "You've successfully signed in.",
+          });
 
           // Priority: backend redirectUrl (with code) → token passthrough → default destination
           let destination: string;
@@ -79,7 +88,9 @@ const Login = () => {
             destination = res.data.callback;
           } else {
             // Build destination; append product param if present
-            destination = productParam ? `${from}?product=${productParam}` : from;
+            destination = productParam
+              ? `${from}?product=${productParam}`
+              : from;
 
             // For cross-domain SSO (e.g. notify.afrisinc.com), pass the token
             // in the URL so the receiving app can bootstrap its session.
@@ -119,7 +130,10 @@ const Login = () => {
       <div className="w-full max-w-md animate-fade-in">
         {/* Header Section */}
         <div className="text-center mb-10">
-          <Link to="/" className="inline-flex items-center gap-2.5 mb-8 justify-center group">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2.5 mb-8 justify-center group"
+          >
             <img
               src="/afrisic-logo.png"
               alt="Afrisinc Logo"
@@ -141,7 +155,10 @@ const Login = () => {
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             {/* Email Field */}
             <div className="space-y-2.5">
-              <Label htmlFor="email" className="text-sm font-semibold text-foreground">
+              <Label
+                htmlFor="email"
+                className="text-sm font-semibold text-foreground"
+              >
                 Email Address
               </Label>
               <Input
@@ -152,14 +169,19 @@ const Login = () => {
                 className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
               />
               {errors.email && (
-                <p className="text-xs text-destructive font-medium">{errors.email.message}</p>
+                <p className="text-xs text-destructive font-medium">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
             {/* Password Field */}
             <div className="space-y-2.5">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-sm font-semibold text-foreground">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-semibold text-foreground"
+                >
                   Password
                 </Label>
                 <Link
@@ -187,7 +209,9 @@ const Login = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-destructive font-medium">{errors.password.message}</p>
+                <p className="text-xs text-destructive font-medium">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -198,7 +222,10 @@ const Login = () => {
                 id="remember"
                 className="w-4 h-4 rounded border-border bg-muted cursor-pointer"
               />
-              <label htmlFor="remember" className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+              <label
+                htmlFor="remember"
+                className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+              >
                 Keep me signed in
               </label>
             </div>

@@ -5,8 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { accountDetailsSchema, type AccountDetailsValues, type AccountType } from "./schemas";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  accountDetailsSchema,
+  type AccountDetailsValues,
+  type AccountType,
+} from "./schemas";
 import { Loader2, Globe } from "lucide-react";
 
 interface StepAccountDetailsProps {
@@ -17,13 +27,7 @@ interface StepAccountDetailsProps {
   isSubmitting: boolean;
 }
 
-const companySizes = [
-  "1-10",
-  "11-50",
-  "51-200",
-  "201-500",
-  "500+",
-];
+const companySizes = ["1-10", "11-50", "51-200", "201-500", "500+"];
 
 const StepAccountDetails = ({
   accountType,
@@ -48,7 +52,10 @@ const StepAccountDetails = ({
 
   const orgName = watch("organizationName");
   const slug = orgName
-    ? orgName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+    ? orgName
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
     : "";
 
   return (
@@ -56,7 +63,9 @@ const StepAccountDetails = ({
       {/* Section Header */}
       <div className="pb-4 border-b border-border/50">
         <h2 className="text-lg font-semibold text-foreground mb-1">
-          {accountType === "personal" ? "Complete Your Profile" : "Organization Details"}
+          {accountType === "personal"
+            ? "Complete Your Profile"
+            : "Organization Details"}
         </h2>
         <p className="text-xs text-muted-foreground">
           {accountType === "personal"
@@ -67,9 +76,14 @@ const StepAccountDetails = ({
 
       {accountType === "personal" ? (
         <div className="space-y-2.5">
-          <Label htmlFor="displayName" className="text-sm font-semibold text-foreground">
+          <Label
+            htmlFor="displayName"
+            className="text-sm font-semibold text-foreground"
+          >
             Display Name
-            <span className="text-xs text-muted-foreground font-normal ml-1">optional</span>
+            <span className="text-xs text-muted-foreground font-normal ml-1">
+              optional
+            </span>
           </Label>
           <Input
             id="displayName"
@@ -85,7 +99,10 @@ const StepAccountDetails = ({
         <>
           {/* Organization Name */}
           <div className="space-y-2.5">
-            <Label htmlFor="organizationName" className="text-sm font-semibold text-foreground">
+            <Label
+              htmlFor="organizationName"
+              className="text-sm font-semibold text-foreground"
+            >
               Organization Name
             </Label>
             <Input
@@ -95,12 +112,15 @@ const StepAccountDetails = ({
               className="h-10 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
             />
             {errors.organizationName && (
-              <p className="text-xs text-destructive font-medium">{errors.organizationName.message}</p>
+              <p className="text-xs text-destructive font-medium">
+                {errors.organizationName.message}
+              </p>
             )}
             {slug && (
               <div className="bg-muted/30 rounded p-2 mt-2 border border-border/50">
                 <p className="text-xs text-muted-foreground">
-                  URL slug: <span className="font-mono text-foreground">{slug}</span>
+                  URL slug:{" "}
+                  <span className="font-mono text-foreground">{slug}</span>
                 </p>
               </div>
             )}
@@ -108,9 +128,14 @@ const StepAccountDetails = ({
 
           {/* Job Title */}
           <div className="space-y-2.5">
-            <Label htmlFor="jobTitle" className="text-sm font-semibold text-foreground">
+            <Label
+              htmlFor="jobTitle"
+              className="text-sm font-semibold text-foreground"
+            >
               Your Role
-              <span className="text-xs text-muted-foreground font-normal ml-1">optional</span>
+              <span className="text-xs text-muted-foreground font-normal ml-1">
+                optional
+              </span>
             </Label>
             <Input
               id="jobTitle"
@@ -122,7 +147,10 @@ const StepAccountDetails = ({
 
           {/* Company Email */}
           <div className="space-y-2.5">
-            <Label htmlFor="companyEmail" className="text-sm font-semibold text-foreground">
+            <Label
+              htmlFor="companyEmail"
+              className="text-sm font-semibold text-foreground"
+            >
               Company Email Address
             </Label>
             <Input
@@ -134,15 +162,22 @@ const StepAccountDetails = ({
               className="h-10 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
             />
             {errors.companyEmail && (
-              <p className="text-xs text-destructive font-medium">{errors.companyEmail.message}</p>
+              <p className="text-xs text-destructive font-medium">
+                {errors.companyEmail.message}
+              </p>
             )}
           </div>
 
           {/* Industry */}
           <div className="space-y-2.5">
-            <Label htmlFor="industry" className="text-sm font-semibold text-foreground">
+            <Label
+              htmlFor="industry"
+              className="text-sm font-semibold text-foreground"
+            >
               Industry
-              <span className="text-xs text-muted-foreground font-normal ml-1">optional</span>
+              <span className="text-xs text-muted-foreground font-normal ml-1">
+                optional
+              </span>
             </Label>
             <Input
               id="industry"
@@ -156,7 +191,9 @@ const StepAccountDetails = ({
           <div className="space-y-2.5">
             <Label className="text-sm font-semibold text-foreground">
               Company Size
-              <span className="text-xs text-muted-foreground font-normal ml-1">optional</span>
+              <span className="text-xs text-muted-foreground font-normal ml-1">
+                optional
+              </span>
             </Label>
             <Select onValueChange={(val) => setValue("companySize", val)}>
               <SelectTrigger className="h-10 bg-muted/40 border-border/60 focus:border-primary/40 transition-all">
@@ -174,9 +211,14 @@ const StepAccountDetails = ({
 
           {/* Website */}
           <div className="space-y-2.5">
-            <Label htmlFor="website" className="text-sm font-semibold text-foreground">
+            <Label
+              htmlFor="website"
+              className="text-sm font-semibold text-foreground"
+            >
               Company Website
-              <span className="text-xs text-muted-foreground font-normal ml-1">optional</span>
+              <span className="text-xs text-muted-foreground font-normal ml-1">
+                optional
+              </span>
             </Label>
             <div className="relative">
               <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -188,7 +230,9 @@ const StepAccountDetails = ({
               />
             </div>
             {errors.website && (
-              <p className="text-xs text-destructive font-medium">{errors.website.message}</p>
+              <p className="text-xs text-destructive font-medium">
+                {errors.website.message}
+              </p>
             )}
           </div>
         </>
@@ -205,11 +249,17 @@ const StepAccountDetails = ({
           />
           <span className="text-sm text-muted-foreground leading-relaxed">
             I agree to the{" "}
-            <Link to="/terms" className="font-semibold text-primary hover:text-primary/80 transition-colors">
+            <Link
+              to="/terms"
+              className="font-semibold text-primary hover:text-primary/80 transition-colors"
+            >
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link to="/privacy" className="font-semibold text-primary hover:text-primary/80 transition-colors">
+            <Link
+              to="/privacy"
+              className="font-semibold text-primary hover:text-primary/80 transition-colors"
+            >
               Privacy Policy
             </Link>
             . I understand my data will be encrypted and protected.
