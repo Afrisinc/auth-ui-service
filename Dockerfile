@@ -12,9 +12,7 @@ RUN pnpm install --frozen-lockfile
 # Copy source code
 COPY . .
 
-ARG VITE_API_URL
-# Build the Vite app with API URL
-RUN VITE_API_URL=${VITE_API_URL} pnpm build
+RUN pnpm build
 
 # ---------- Serve ----------
 FROM nginx:alpine
@@ -25,6 +23,10 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 8098
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]
