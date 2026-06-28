@@ -248,19 +248,6 @@ const Login = () => {
               )}
             </Button>
           </form>
-
-          {/* Sign Up Link */}
-          <div className="mt-6 pt-6 border-t border-border/50 text-center">
-            <p className="text-sm text-muted-foreground">
-              New to Afrisinc?{" "}
-              <Link
-                to="/register"
-                className="font-semibold text-primary hover:text-primary/80 transition-colors"
-              >
-                Create an account
-              </Link>
-            </p>
-          </div>
         </div>
 
         {/* Security Note */}
