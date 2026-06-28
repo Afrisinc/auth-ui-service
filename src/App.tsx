@@ -30,9 +30,14 @@ const queryClient = new QueryClient({
 
 const App = () => {
   useEffect(() => {
-    // On app load, check if theme cookie exists and apply it
+    // On app load, check if theme cookie exists and apply it before next-themes hydrates
     const cookieTheme = getThemeFromCookie();
-    if (cookieTheme) {
+    if (cookieTheme === "system") {
+      const prefersDark = globalThis.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      document.documentElement.classList.toggle("dark", prefersDark);
+    } else if (cookieTheme) {
       document.documentElement.classList.toggle("dark", cookieTheme === "dark");
     }
   }, []);

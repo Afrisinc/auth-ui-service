@@ -23,7 +23,7 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "", password: "", remember_me: false },
   });
 
   // Priority: redirect_uri param → router state → /dashboard
@@ -220,7 +220,8 @@ const Login = () => {
               <input
                 type="checkbox"
                 id="remember"
-                className="w-4 h-4 rounded border-border bg-muted cursor-pointer"
+                {...register("remember_me")}
+                className="w-4 h-4 rounded border-border bg-muted cursor-pointer accent-primary"
               />
               <label
                 htmlFor="remember"

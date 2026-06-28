@@ -9,6 +9,7 @@ export const LoginSchema = z.object({
     .string()
     .min(6, { message: "Product code must be at least 6 characters long" })
     .optional(),
+  remember_me: z.boolean().optional(),
 });
 
 export const RegisterSchema = z.object({
