@@ -250,10 +250,20 @@ const Login = () => {
           </form>
         </div>
 
-        {/* Security Note */}
-        <p className="text-center text-xs text-muted-foreground/60 mt-6">
-          Your data is encrypted and secured with industry-standard protocols
-        </p>
+        {/* Footer Section */}
+        <div className="text-center mt-6 space-y-2">
+          <p className="text-xs text-muted-foreground/60">
+            Your data is encrypted and secured with industry-standard protocols
+          </p>
+          <a
+            href="https://afrisinc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-xs text-primary/70 hover:text-primary transition-colors font-medium"
+          >
+            Visit Website
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -182,10 +182,20 @@ const SignupForm = () => {
         </p>
       </div>
 
-      {/* Security Note */}
-      <p className="text-center text-xs text-muted-foreground/60 mt-5">
-        All information is encrypted and secure
-      </p>
+      {/* Footer Section */}
+      <div className="text-center mt-5 space-y-2">
+        <p className="text-xs text-muted-foreground/60">
+          All information is encrypted and secure
+        </p>
+        <a
+          href="https://afrisinc.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-xs text-primary/70 hover:text-primary transition-colors font-medium"
+        >
+          Visit Website
+        </a>
+      </div>
     </div>
   );
 };
