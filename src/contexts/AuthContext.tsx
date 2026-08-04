@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { getApiErrorMessage } from "@/lib/authUtils";
 
 interface CustomUser {
   id: string;
@@ -88,7 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!response.ok) {
         const errorData = await response.json();
         return {
-          error: new Error(errorData.resp_msg || "Registration failed"),
+          error: new Error(getApiErrorMessage(errorData, "Registration failed")),
         };
       }
 
@@ -113,7 +114,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (!response.ok) {
         const errorData = await response.json();
-        return { error: new Error(errorData.resp_msg || "Login failed") };
+        return { error: new Error(getApiErrorMessage(errorData, "Login failed")) };
       }
 
       const data = await response.json();
@@ -140,7 +141,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         return { error: null };
       }
 
-      return { error: new Error(data.resp_msg || "Login failed") };
+      return { error: new Error(getApiErrorMessage(data, "Login failed")) };
     } catch (error) {
       return {
         error: error instanceof Error ? error : new Error("Login failed"),
@@ -168,7 +169,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!response.ok) {
         const errorData = await response.json();
         return {
-          error: new Error(errorData.resp_msg || "Password reset failed"),
+          error: new Error(
+            getApiErrorMessage(errorData, "Password reset failed")
+          ),
         };
       }
 

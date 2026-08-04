@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/auth";
 import { jwtDecode } from "jwt-decode";
 import { useLogin } from "@/hooks/useAuth";
+import { getApiErrorMessage } from "@/lib/authUtils";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -110,7 +111,7 @@ const Login = () => {
         } else {
           toast({
             title: "Login Failed",
-            description: res.resp_msg || "Invalid credentials",
+            description: getApiErrorMessage(res, "Invalid credentials"),
             variant: "destructive",
           });
         }
@@ -118,7 +119,7 @@ const Login = () => {
       onError: (error: Error) => {
         toast({
           title: "Login Failed",
-          description: error.message || "Login failed",
+          description: getApiErrorMessage(error, "Login failed"),
           variant: "destructive",
         });
       },

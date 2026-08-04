@@ -3,6 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { useSignup } from "@/hooks/useAuth";
+import { getApiErrorMessage } from "@/lib/authUtils";
 import SignupStepper from "./SignupStepper";
 import StepIdentity from "./StepIdentity";
 import StepAccountType from "./StepAccountType";
@@ -37,20 +38,18 @@ const SignupForm = () => {
           : "/login";
         navigate(destination);
       } else {
-        toast.error(res.resp_msg || "Registration failed. Please try again.");
+        toast.error(
+          getApiErrorMessage(res, "Registration failed. Please try again.")
+        );
       }
     },
     [redirectUri, productCode, navigate]
   );
 
   const handleSignupError = useCallback((error: any) => {
-    // Extract error message from Axios error response or generic error
-    const errorMessage =
-      error?.response?.data?.resp_msg ||
-      error?.response?.data?.message ||
-      error?.message ||
-      "Registration failed. Please try again.";
-    toast.error(errorMessage);
+    toast.error(
+      getApiErrorMessage(error, "Registration failed. Please try again.")
+    );
   }, []);
 
   const handleIdentityNext = useCallback((values: IdentityValues) => {

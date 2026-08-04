@@ -3,6 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Loader2, Mail } from "lucide-react";
 import { useVerifyEmail } from "@/hooks/useAuth";
+import { getApiErrorMessage } from "@/lib/authUtils";
 
 type VerifyState = "loading" | "success" | "error" | "idle";
 
@@ -30,13 +31,16 @@ const VerifyEmail = () => {
         } else {
           setState("error");
           setMessage(
-            res.resp_msg || "Verification failed. The link may have expired."
+            getApiErrorMessage(
+              res,
+              "Verification failed. The link may have expired."
+            )
           );
         }
       },
-      onError: () => {
+      onError: (error) => {
         setState("error");
-        setMessage("Something went wrong. Please try again.");
+        setMessage(getApiErrorMessage(error, "Something went wrong. Please try again."));
       },
     });
   }, [token, mutate]);

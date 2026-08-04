@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Eye, EyeOff, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { getRuntimeConfig } from "@/lib/config";
+import { getApiErrorMessage } from "@/lib/authUtils";
 
 const ResetPasswordSchema = z
   .object({
@@ -70,8 +71,10 @@ const ResetPassword = () => {
         const errorData = await response.json();
         toast({
           title: "Reset Failed",
-          description:
-            errorData.resp_msg || "Password reset failed. Please try again.",
+          description: getApiErrorMessage(
+            errorData,
+            "Password reset failed. Please try again."
+          ),
           variant: "destructive",
         });
         return;
