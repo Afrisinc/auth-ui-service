@@ -89,7 +89,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!response.ok) {
         const errorData = await response.json();
         return {
-          error: new Error(getApiErrorMessage(errorData, "Registration failed")),
+          error: new Error(
+            getApiErrorMessage(errorData, "Registration failed")
+          ),
         };
       }
 
@@ -114,7 +116,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (!response.ok) {
         const errorData = await response.json();
-        return { error: new Error(getApiErrorMessage(errorData, "Login failed")) };
+        return {
+          error: new Error(getApiErrorMessage(errorData, "Login failed")),
+        };
       }
 
       const data = await response.json();

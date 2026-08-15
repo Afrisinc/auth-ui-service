@@ -17,8 +17,7 @@ export const getApiErrorMessage = (
   fallback = "Something went wrong. Please try again."
 ): string => {
   const data: ResponseData | undefined =
-    (source as AxiosErrorResponse)?.response?.data ??
-    (source as ResponseData);
+    (source as AxiosErrorResponse)?.response?.data ?? (source as ResponseData);
 
   return (
     data?.error_msg ||

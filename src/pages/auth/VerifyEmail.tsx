@@ -40,7 +40,9 @@ const VerifyEmail = () => {
       },
       onError: (error) => {
         setState("error");
-        setMessage(getApiErrorMessage(error, "Something went wrong. Please try again."));
+        setMessage(
+          getApiErrorMessage(error, "Something went wrong. Please try again.")
+        );
       },
     });
   }, [token, mutate]);
