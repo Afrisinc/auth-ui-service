@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { PasswordInput } from "@/components/ui/password-input";
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LoginSchema, type LoginSchemaType } from "@/lib/schemas/auth";
 import { jwtDecode } from "jwt-decode";
@@ -13,7 +14,6 @@ import { useLogin } from "@/hooks/useAuth";
 import { getApiErrorMessage } from "@/lib/authUtils";
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
@@ -127,146 +127,101 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-hero p-6">
-      <div className="w-full max-w-md animate-fade-in">
-        {/* Header Section */}
-        <div className="text-center mb-10">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2.5 mb-8 justify-center group"
+    <AuthLayout
+      title="Welcome back"
+      subtitle={
+        productParam
+          ? `Access ${productParam.charAt(0).toUpperCase()}${productParam.slice(1)} and manage your identity`
+          : "Sign in to your Afrisinc account"
+      }
+      cardClassName="transition-all duration-300 hover:shadow-card-hover"
+    >
+      <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+        {/* Email Field */}
+        <div className="space-y-2.5">
+          <Label
+            htmlFor="email"
+            className="text-sm font-semibold text-foreground"
           >
-            <img
-              src="/afrisic-logo.png"
-              alt="Afrisinc Logo"
-              className="w-11 h-11 rounded-xl object-cover group-hover:shadow-lg transition-shadow"
-            />
-            <span className="text-xl font-bold text-foreground">Afrisinc</span>
-          </Link>
-
-          <h1 className="heading-subsection mb-3">Welcome back</h1>
-          <p className="text-sm text-muted-foreground">
-            {productParam
-              ? `Access ${productParam.charAt(0).toUpperCase()}${productParam.slice(1)} and manage your identity`
-              : "Sign in to your Afrisinc account"}
-          </p>
+            Email Address
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            {...register("email")}
+            className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
+          />
+          {errors.email && (
+            <p className="text-xs text-destructive font-medium">
+              {errors.email.message}
+            </p>
+          )}
         </div>
 
-        {/* Login Card */}
-        <div className="bg-card rounded-2xl p-8 shadow-card border border-border/50 hover:shadow-card-hover transition-all duration-300">
-          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-            {/* Email Field */}
-            <div className="space-y-2.5">
-              <Label
-                htmlFor="email"
-                className="text-sm font-semibold text-foreground"
-              >
-                Email Address
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                {...register("email")}
-                className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
-              />
-              {errors.email && (
-                <p className="text-xs text-destructive font-medium">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-
-            {/* Password Field */}
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between">
-                <Label
-                  htmlFor="password"
-                  className="text-sm font-semibold text-foreground"
-                >
-                  Password
-                </Label>
-                <Link
-                  to="/forgot-password"
-                  className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
-                >
-                  Forgot?
-                </Link>
-              </div>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  {...register("password")}
-                  className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-xs text-destructive font-medium">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-
-            {/* Remember Me Checkbox */}
-            <div className="flex items-center gap-2 pt-1">
-              <input
-                type="checkbox"
-                id="remember"
-                {...register("remember_me")}
-                className="w-4 h-4 rounded border-border bg-muted cursor-pointer accent-primary"
-              />
-              <label
-                htmlFor="remember"
-                className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-              >
-                Keep me signed in
-              </label>
-            </div>
-
-            {/* Sign In Button */}
-            <Button
-              variant="default"
-              className="w-full h-11 font-semibold rounded-lg shadow-primary hover:shadow-lg transition-all mt-6"
-              type="submit"
-              disabled={isPending}
+        {/* Password Field */}
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between gap-3">
+            <Label
+              htmlFor="password"
+              className="text-sm font-semibold text-foreground"
             >
-              {isPending ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Signing in...
-                </>
-              ) : (
-                "Sign In"
-              )}
-            </Button>
-          </form>
+              Password
+            </Label>
+            <Link
+              to="/forgot-password"
+              className="-my-2 inline-flex min-h-10 items-center px-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
+            >
+              Forgot?
+            </Link>
+          </div>
+          <PasswordInput
+            id="password"
+            autoComplete="current-password"
+            placeholder="Enter your password"
+            {...register("password")}
+            className="h-11 bg-muted/40 border-border/60 focus:border-primary/40 transition-all"
+          />
+          {errors.password && (
+            <p className="text-xs text-destructive font-medium">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
-        {/* Footer Section */}
-        <div className="text-center mt-6 space-y-2">
-          <p className="text-xs text-muted-foreground/60">
-            Your data is encrypted and secured with industry-standard protocols
-          </p>
-          <a
-            href="https://afrisinc.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-xs text-primary/70 hover:text-primary transition-colors font-medium"
-          >
-            Visit Website
-          </a>
-        </div>
-      </div>
-    </div>
+        {/* Remember Me Checkbox */}
+        <label
+          htmlFor="remember"
+          className="flex min-h-10 w-fit cursor-pointer items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <input
+            type="checkbox"
+            id="remember"
+            {...register("remember_me")}
+            className="w-4 h-4 shrink-0 rounded border-border bg-muted cursor-pointer accent-primary"
+          />
+          Keep me signed in
+        </label>
+
+        {/* Sign In Button */}
+        <Button
+          variant="default"
+          className="w-full h-11 font-semibold rounded-lg shadow-primary hover:shadow-lg transition-all mt-6"
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Signing in...
+            </>
+          ) : (
+            "Sign In"
+          )}
+        </Button>
+      </form>
+    </AuthLayout>
   );
 };
 
